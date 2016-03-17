@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="spark_dmp_label_childmom:jar">
+    <output-path>$PROJECT_DIR$/../../jar</output-path>
+    <root id="archive" name="spark_dmp_label_childmom.jar">
+      <element id="module-output" name="spark_dmp_label_childmom" />
+    </root>
+  </artifact>
+</component>
