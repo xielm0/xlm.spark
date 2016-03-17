@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://E:/Github/spark1.4/mllib/src/main/scala/org/apache/spark/mllib/classification/NaiveBayes.scala" charset="UTF-8" />
+    <file url="file://E:/Github/spark1.4/mllib/src/main/scala/org/apache/spark/mllib/linalg/BLAS.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/assembly" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/bagel" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/examples" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/flume" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/flume-assembly" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/flume-sink" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/kafka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/kafka-assembly" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/mqtt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/mqtt-assembly" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/twitter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/external/zeromq" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/graphx" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/launcher" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/mllib" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/network/common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/network/shuffle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/repl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/sql/catalyst" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/sql/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/sql/hive" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/streaming" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/tags" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/tools" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../spark1.5/unsafe" charset="UTF-8" />
+  </component>
+</project>
