@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="scala-sdk-2.10.4" level="project" />
-    <orderEntry type="library" name="spark-assembly-1.4.0-SNAPSHOT-hadoop2.2.0" level="project" />
+    <orderEntry type="library" name="spark-assembly-1.4.0-SNAPSHOT-hadoop2.2.01" level="project" />
   </component>
 </module>
