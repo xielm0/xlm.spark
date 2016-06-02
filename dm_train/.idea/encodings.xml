@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/Document.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/Evaluator.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/GibbsLDA.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/ModelGibbsLDA.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/ParserRawFile.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/Sampler.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/LDA/Writer.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/dm_train/Byes.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/dm_train/DT.scala" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/scala/dm_train/LR.scala" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

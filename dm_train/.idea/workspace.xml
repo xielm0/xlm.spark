@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d0946c9b-55ce-4d0a-b41c-7738cae6b9e9" name="Default" comment="">
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\libraries\scala.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\Byes.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\Byes\src\dm\share\Byes.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\DT.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\DT\src\dm\share\DT.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\artifacts\LDA2_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\libraries\scala_sdk_2_10_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_01.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\LDA2.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\META-INF\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Document$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Document.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Evaluator$$anonfun$1$$anonfun$apply$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Evaluator$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Evaluator$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Evaluator$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Evaluator.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$2$$anonfun$apply$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$RunLda$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$gibbsSampling$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$updateNKV$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$$anonfun$updateNKV$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\GibbsLDA.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$5.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$RunLda$1$$anonfun$apply$mcVI$sp$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$RunLda$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$gibbsSampling$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$updateNKV$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$$anonfun$updateNKV$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\MGibbsLDA.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anon$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anonfun$1$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anonfun$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anonfun$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anonfun$5.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$$anonfun$parse_data$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Parser.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Sampler$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Sampler$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Sampler$$anonfun$Multinomial$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Sampler$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Sampler.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$1$$anonfun$apply$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$DocTopicParameter$1$$anonfun$apply$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$DocTopicParameter$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$sovlePhi$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$sovlePhi$2$$anonfun$apply$mcVI$sp$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$sovlePhi$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$sovleTheta$1$$anonfun$apply$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$$anonfun$sovleTheta$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\out\production\LDA2\com\jd\spark\ml\Writer.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\META-INF\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\Document.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\Evaluator.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\GibbsLDA.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\ModelGibbsLDA.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\ParserRawFile.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\Sampler.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LDA2\src\com\jd\spark\ml\Writer.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\LR.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\LR\src\dm\share\logit.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\artifacts\mllib_test_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\sbt.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\mllib_test.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\META-INF\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$1$$anonfun$apply$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$5.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$$anonfun$main$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\out\production\mllib_test\org\apache\spark\mllib\test\test.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\src\META-INF\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\mllib_test\src\org\apache\spark\mllib\test\test.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__antlr_antlr_2_7_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__aopalliance_aopalliance_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__asm_asm_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__cglib_cglib_nodep_2_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_101tec_zkclient_0_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_clearspring_analytics_stream_2_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_esotericsoftware_kryo_kryo_2_21.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_esotericsoftware_minlog_minlog_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_esotericsoftware_reflectasm_reflectasm_shaded_1_07.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_fasterxml_jackson_core_jackson_annotations_2_4_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_fasterxml_jackson_core_jackson_core_2_4_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_fasterxml_jackson_core_jackson_databind_2_4_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_fasterxml_jackson_module_jackson_module_scala_2_10_2_4_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_fommil_netlib_core_1_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_jnr_jnr_constants_0_8_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_rwl_jtransforms_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_scopt_scopt_2_10_3_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_stephenc_findbugs_findbugs_annotations_1_3_9_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_stephenc_high_scale_lib_high_scale_lib_1_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_github_stephenc_jamm_0_2_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_google_code_findbugs_jsr305_1_3_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_google_code_gson_gson_2_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_google_guava_guava_14_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_google_inject_extensions_guice_servlet_3_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_google_inject_guice_3_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_google_protobuf_protobuf_java_2_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_googlecode_javaewah_JavaEWAH_0_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_googlecode_javaewah_JavaEWAH_0_6_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_googlecode_json_simple_json_simple_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_h2database_h2_1_4_183.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_jcraft_jsch_0_1_42.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_jolbox_bonecp_0_8_0_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_ning_compress_lzf_1_0_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_novocode_junit_interface_0_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_contribs_jersey_guice_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_client_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_core_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_grizzly2_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_json_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_server_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_test_framework_jersey_test_framework_core_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_jersey_jersey_test_framework_jersey_test_framework_grizzly2_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_xml_bind_jaxb_core_2_2_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_xml_bind_jaxb_impl_2_2_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_sun_xml_bind_jaxb_impl_2_2_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_thoughtworks_paranamer_paranamer_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_thoughtworks_paranamer_paranamer_2_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_twitter_algebird_core_2_10_0_9_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_twitter_chill_2_10_0_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_twitter_chill_java_0_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_twitter_parquet_hadoop_bundle_1_6_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_typesafe_akka_akka_actor_2_10_2_3_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_typesafe_akka_akka_remote_2_10_2_3_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_typesafe_akka_akka_slf4j_2_10_2_3_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_typesafe_akka_akka_testkit_2_10_2_3_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_typesafe_akka_akka_zeromq_2_10_2_3_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_typesafe_config_1_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__com_yammer_metrics_metrics_core_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_beanutils_commons_beanutils_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_beanutils_commons_beanutils_core_1_8_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_cli_commons_cli_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_codec_commons_codec_1_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_collections_commons_collections_3_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_configuration_commons_configuration_1_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_daemon_commons_daemon_1_0_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_dbcp_commons_dbcp_1_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_digester_commons_digester_1_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_el_commons_el_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_httpclient_commons_httpclient_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_io_commons_io_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_io_commons_io_2_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_lang_commons_lang_2_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_logging_commons_logging_1_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_logging_commons_logging_1_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_net_commons_net_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__commons_pool_commons_pool_1_5_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__edu_stanford_ppl_snaptree_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_dropwizard_metrics_metrics_core_3_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_dropwizard_metrics_metrics_graphite_3_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_dropwizard_metrics_metrics_json_3_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_dropwizard_metrics_metrics_jvm_3_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_netty_netty_3_4_0_Final.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_netty_netty_3_8_0_Final.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__io_netty_netty_all_4_0_29_Final.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_activation_activation_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_inject_javax_inject_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_jdo_jdo_api_3_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_servlet_javax_servlet_api_3_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_transaction_jta_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_xml_bind_jaxb_api_2_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javax_xml_bind_jaxb_api_2_2_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__javolution_javolution_5_5_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__jline_jline_0_9_94.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__jline_jline_2_12.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__joda_time_joda_time_2_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__junit_junit_4_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__log4j_apache_log4j_extras_1_2_17.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__log4j_log4j_1_2_17.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__mysql_mysql_connector_java_5_1_34.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_hydromatic_eigenbase_properties_1_1_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_java_dev_jets3t_jets3t_0_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_java_dev_jna_jna_3_0_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_java_dev_jna_jna_3_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_java_dev_jna_platform_3_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_jpountz_lz4_lz4_1_3_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_razorvine_pyrolite_4_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sf_jopt_simple_jopt_simple_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sf_opencsv_opencsv_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sf_py4j_py4j_0_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sourceforge_cssparser_cssparser_0_9_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sourceforge_f2j_arpack_combined_all_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sourceforge_htmlunit_htmlunit_2_14.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sourceforge_htmlunit_htmlunit_core_js_2_14.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__net_sourceforge_nekohtml_nekohtml_1_9_20.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_antlr_ST4_4_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_antlr_antlr_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_antlr_antlr_runtime_3_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_antlr_stringtemplate_3_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_activemq_activemq_core_5_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_activemq_kahadb_5_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_activemq_protobuf_activemq_protobuf_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_avro_avro_1_7_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_avro_avro_ipc_1_7_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_avro_avro_ipc_tests_1_7_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_avro_avro_mapred_hadoop2_1_7_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_calcite_calcite_avatica_1_2_0_incubating.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_calcite_calcite_core_1_2_0_incubating.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_calcite_calcite_linq4j_1_2_0_incubating.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_cassandra_cassandra_all_1_2_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_cassandra_cassandra_thrift_1_2_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_commons_commons_compress_1_4_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_commons_commons_exec_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_commons_commons_lang3_3_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_commons_commons_math3_3_4_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_commons_commons_math_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_commons_commons_math_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_curator_curator_client_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_curator_curator_framework_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_curator_curator_recipes_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_curator_curator_test_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_derby_derby_10_10_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_flume_flume_ng_configuration_1_6_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_flume_flume_ng_core_1_6_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_flume_flume_ng_sdk_1_6_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_geronimo_specs_geronimo_j2ee_management_1_1_spec_1_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_geronimo_specs_geronimo_jms_1_1_spec_1_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_annotations_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_auth_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_client_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_common_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_common_test_jar_tests_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_hdfs_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_hdfs_test_jar_tests_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_app_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_common_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_core_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_hs_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_jobclient_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_jobclient_test_jar_tests_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_mapreduce_client_shuffle_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_minicluster_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_api_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_client_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_common_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_server_common_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_server_nodemanager_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_server_resourcemanager_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_server_tests_test_jar_tests_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hadoop_hadoop_yarn_server_web_proxy_2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_client_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_common_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_common_test_jar_tests_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_hadoop2_compat_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_hadoop2_compat_test_jar_tests_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_hadoop_compat_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_hadoop_compat_test_jar_tests_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_prefix_tree_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_protocol_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_server_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_server_test_jar_tests_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_hbase_hbase_testing_util_0_98_7_hadoop2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_httpcomponents_httpclient_4_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_httpcomponents_httpcore_4_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_httpcomponents_httpmime_4_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_ivy_ivy_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_kafka_kafka_2_10_0_8_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_kafka_kafka_clients_0_8_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_mesos_mesos_shaded_protobuf_0_21_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_mina_mina_core_2_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_avro_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_column_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_common_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_encoding_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_format_2_3_0_incubating.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_generator_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_hadoop_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_parquet_parquet_jackson_1_7_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_thrift_libfb303_0_9_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_thrift_libthrift_0_9_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_apache_zookeeper_zookeeper_3_4_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_cloudera_htrace_htrace_core_2_04.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_groovy_groovy_all_2_1_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_jackson_jackson_core_asl_1_9_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_jackson_jackson_jaxrs_1_9_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_jackson_jackson_xc_1_9_13.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_janino_commons_compiler_2_7_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_janino_commons_compiler_2_7_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_janino_janino_2_7_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_codehaus_jettison_jettison_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_datanucleus_datanucleus_api_jdo_3_2_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_datanucleus_datanucleus_core_3_2_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_datanucleus_datanucleus_rdbms_3_2_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_continuation_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_http_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_io_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_jndi_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_plus_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_security_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_server_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_servlet_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_util_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_webapp_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_websocket_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_jetty_xml_8_1_14_v20131031.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_orbit_javax_activation_1_1_0_v201105071233.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_orbit_javax_mail_glassfish_1_4_1_v201005082020.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_orbit_javax_servlet_3_0_0_v201112011016.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_jetty_orbit_javax_transaction_1_1_1_v201105210645.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_eclipse_paho_org_eclipse_paho_client_mqttv3_1_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_fusesource_hawtbuf_hawtbuf_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_fusesource_hawtdispatch_hawtdispatch_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_fusesource_hawtdispatch_hawtdispatch_transport_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_fusesource_jansi_jansi_1_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_fusesource_leveldbjni_leveldbjni_all_1_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_fusesource_mqtt_client_mqtt_client_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_external_management_api_3_0_0_b012.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_gmbal_gmbal_api_only_3_0_0_b023.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_grizzly_grizzly_framework_2_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_grizzly_grizzly_http_2_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_grizzly_grizzly_http_server_2_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_grizzly_grizzly_http_servlet_2_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_grizzly_grizzly_rcm_2_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_glassfish_javax_servlet_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_hamcrest_hamcrest_core_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_hamcrest_hamcrest_library_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_iq80_snappy_snappy_0_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jamon_jamon_runtime_2_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jasypt_jasypt_1_9_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_javassist_javassist_3_15_0_GA.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jblas_jblas_1_2_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jboss_netty_netty_3_2_2_Final.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jodd_jodd_core_3_5_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jpmml_pmml_agent_1_1_15.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jpmml_pmml_model_1_1_15.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jpmml_pmml_schema_1_1_15.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jruby_jcodings_jcodings_1_0_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_jruby_joni_joni_2_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_json4s_json4s_ast_2_10_3_2_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_json4s_json4s_core_2_10_3_2_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_json4s_json4s_jackson_2_10_3_2_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_json_json_20080701.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_json_json_20090211.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mindrot_jbcrypt_0_3m.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mockito_mockito_core_1_9_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mortbay_jetty_jetty_6_1_26.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mortbay_jetty_jetty_sslengine_6_1_26.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mortbay_jetty_jetty_util_6_1_26.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mortbay_jetty_jsp_2_1_6_1_14.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mortbay_jetty_jsp_api_2_1_6_1_14.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_mortbay_jetty_servlet_api_2_5_6_1_14.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_objenesis_objenesis_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_objenesis_objenesis_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_postgresql_postgresql_9_3_1102_jdbc41.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scala_lang_jline_2_10_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scala_lang_scala_compiler_2_10_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scala_lang_scala_library_2_10_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scala_lang_scala_reflect_2_10_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scala_lang_scalap_2_10_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scala_sbt_test_interface_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scalacheck_scalacheck_2_10_1_11_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scalamacros_quasiquotes_2_10_2_0_0_M8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scalanlp_breeze_2_10_0_11_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scalanlp_breeze_macros_2_10_0_11_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_scalatest_scalatest_2_10_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_api_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_chrome_driver_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_firefox_driver_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_htmlunit_driver_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_ie_driver_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_java_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_remote_driver_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_safari_driver_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_seleniumhq_selenium_selenium_support_2_42_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_slf4j_jcl_over_slf4j_1_7_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_slf4j_jul_to_slf4j_1_7_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_slf4j_slf4j_api_1_7_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_slf4j_slf4j_log4j12_1_7_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_spark_project_hive_hive_exec_1_2_1_spark.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_spark_project_hive_hive_metastore_1_2_1_spark.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_spark_project_spark_unused_1_0_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_spire_math_spire_2_10_0_7_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_spire_math_spire_macros_2_10_0_7_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_springframework_spring_aop_3_0_7_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_springframework_spring_asm_3_0_7_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_springframework_spring_beans_3_0_7_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_springframework_spring_context_3_0_7_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_springframework_spring_core_3_0_7_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_springframework_spring_expression_3_0_7_RELEASE.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_tachyonproject_tachyon_client_0_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_tachyonproject_tachyon_underfs_hdfs_0_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_tachyonproject_tachyon_underfs_local_0_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_tukaani_xz_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_twitter4j_twitter4j_core_4_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_twitter4j_twitter4j_stream_4_0_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_uncommons_maths_uncommons_maths_1_2_2a.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_w3c_css_sac_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_webbitserver_webbit_0_4_14.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_xerial_snappy_snappy_java_1_1_1_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_yaml_snakeyaml_1_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__org_zeromq_zeromq_scala_binding_2_10_0_0_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__oro_oro_2_0_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__stax_stax_api_1_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__tomcat_jasper_compiler_5_5_23.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__tomcat_jasper_runtime_5_5_23.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__xalan_serializer_2_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__xalan_xalan_2_7_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__xerces_xercesImpl_2_11_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__xml_apis_xml_apis_1_4_01.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\libraries\Maven__xmlenc_xmlenc_0_52.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\sbt.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\scala_compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark15\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\artifacts\spark_dmp_label_childmom_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\libraries\scala.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\sbt.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\uiDesigner.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\.idea\workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\META-INF\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$1$$anonfun$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$3.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$4$$anonfun$5.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$4.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$6.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$classific_train$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$anonfun$classific_train$2.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$$typecreator1$1.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child$.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\out\production\spark_dmp_label_childmom\childmom_tag\classific_child.class" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\spark_dmp_label_childmom.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\src\META-INF\MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_childmom\src\childmom_tag\classific_child.scala" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_label_intrest\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\.name" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\copyright\profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\libraries\spark_assembly_1_4_0_SNAPSHOT_hadoop2_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\sbt.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\.idea\vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\spark_dmp_recommend.iml" afterPath="" />
+      <change type="DELETED" beforePath="E:\Github\xlm.spark\spark_dmp_recommend\src\org\apache\spark\mllib\recommend\Als_recommend.scala" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../spark_dmp_label_intrest/src/org/apache/spark/mllib/clusteringB/APP.scala" afterPath="$PROJECT_DIR$/../spark_dmp_label_intrest/src/org/apache/spark/mllib/clusteringB/APP.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/LDA/Writer.scala" afterPath="$PROJECT_DIR$/src/main/scala/LDA/Writer.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../spark_dmp_label_intrest/.idea/misc.xml" afterPath="$PROJECT_DIR$/../spark_dmp_label_intrest/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../spark_dmp_label_intrest/spark_dmp_label_intrest.iml" afterPath="$PROJECT_DIR$/../spark_dmp_label_intrest/spark_dmp_label_intrest.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../spark_dmp_label_intrest/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../spark_dmp_label_intrest/.idea/workspace.xml" />
+    </list>
+    <ignored path="dmp.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="dmp" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.9375">
+              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Byes.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/dm_train/Byes.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DT.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/dm_train/DT.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Writer.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/Writer.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.20070423">
+              <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".name" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/.name">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/scala/dm_train/LR.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/Document.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/Evaluator.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/GibbsLDA.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/ModelGibbsLDA.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/ParserRawFile.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/Sampler.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/LDA/Writer.scala" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/.idea/.name" />
+        <option value="$PROJECT_DIR$/src/main/scala/dm_train/Byes.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/dm_train/DT.scala" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="dm_train" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="dm_train" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Lifecycle" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
+  </component>
+  <component name="NamedScopeManager">
+    <order />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Android Lint</id>
+          </State>
+          <State>
+            <id>Internationalization issues</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Android</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dm_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dm_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dm_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LDA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dm_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dm_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dmp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dm_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".idea" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="dynamic.classpath" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="uTestRunConfiguration" factoryName="utest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+  </component>
+  <component name="SbtLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d0946c9b-55ce-4d0a-b41c-7738cae6b9e9" name="Default" comment="" />
+      <created>1464857462972</created>
+      <option name="number" value="Default" />
+      <updated>1464857462972</updated>
+    </task>
+    <task id="LOCAL-00001" summary="new">
+      <created>1464859586154</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1464859586154</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32905984" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32922733" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new" />
+    <option name="LAST_COMMIT_MESSAGE" value="new" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/bin/lad.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/Sampler.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23201856">
+          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/ParserRawFile.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11600928">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/ModelGibbsLDA.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11600928">
+          <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/GibbsLDA.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11600928">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/Evaluator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26102087">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/Document.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.087006964">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/dm_train/LR.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20301624">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dm_train.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21084337">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/bin/lad.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6040892">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/.name">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.9375">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/dm_train/Byes.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/dm_train/DT.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/LDA/Writer.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20070423">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
