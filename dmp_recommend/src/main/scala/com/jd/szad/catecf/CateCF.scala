@@ -6,12 +6,7 @@ package com.jd.szad.catecf
 import org.apache.spark.{SparkConf, SparkContext}
 
 /*
-   nohup spark-submit --master yarn-client \
-   nohup spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
-   --num-executors 10 --executor-memory 10g --executor-cores 4 \
-   --class com.jd.szad.catecf.CateCF \
-   /home/jd_ad/xlm/spark_szad_label_xlm.jar  &
-   /home/jd_ad/data_dir/xieliming/spark_szad_label_xlm.jar  &
+   &
 */
 
 object CateCF {

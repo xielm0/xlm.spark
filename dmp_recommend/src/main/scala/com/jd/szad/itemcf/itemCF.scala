@@ -9,22 +9,6 @@ import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
-/*
-   nohup spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
-   --num-executors 80 --executor-memory 8g --executor-cores 4 \
-   --class com.jd.szad.catecf.itemCF \
-   /home/jd_ad/xlm/spark_szad_label_xlm.jar  \
-   app.db/app_szad_m_dmp_itemcf_train_day/action_type=1 1000  app.db/app_szad_m_dmp_itemcf_res/action_type=1 &
-
-   nohup spark-submit --master yarn-client \
-   --num-executors 80 --executor-memory 10g --executor-cores 4 \
-   --class com.jd.szad.catecf.itemCF \
-   /home/jd_ad/data_dir/xieliming/spark_szad_label_xlm.jar  \
-   app.db/app_szad_m_dmp_itemcf_train_day/action_type=5 800  app.db/app_szad_m_dmp_itemcf_res/action_type=5 &
-
-   --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=100 \
-   --conf "spark.executor.extraJavaOptions=-XX:+UseParallelGC -XX:+UseParallelOldGC"
-*/
 
 object itemCF {
   def main(args:Array[String]) {
