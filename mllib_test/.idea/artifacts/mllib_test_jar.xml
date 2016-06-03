@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="mllib_test:jar">
-    <output-path>$PROJECT_DIR$/../../jar</output-path>
-    <root id="archive" name="mllib_test.jar">
-      <element id="module-output" name="mllib_test" />
-    </root>
-  </artifact>
-</component>

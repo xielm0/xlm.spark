@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="spark_dmp_label_intrest">
-    <output-path>E:/spark/jar/</output-path>
-    <root id="archive" name="LDA15.jar">
-      <element id="module-output" name="spark_dmp_label_intrest" />
-    </root>
-  </artifact>
-</component>

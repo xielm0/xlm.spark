@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="LDA2:jar">
-    <output-path>E:/spark</output-path>
-    <root id="archive" name="LDA2.jar">
-      <element id="module-output" name="LDA2" />
-    </root>
-  </artifact>
-</component>
