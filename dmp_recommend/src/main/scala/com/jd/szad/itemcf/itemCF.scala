@@ -88,9 +88,9 @@ object itemCF {
 
     //top10
     val pair_topk = sim.map{case (item1,item2,score) => (item1,(item2,score))}.groupByKey().flatMap{
-      case ( a, b)=>  //b=Interable[(item2,score)]
-        val topk= b.toArray.sortWith{case(a,b) => a._2>b._2 }.take(10)
-        topk.map{case(b,score) => (a,b,score) }
+      case( a, b)=>  //b=Interable[(item2,score)]
+        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(10)
+        topk.map{ t => (a,t._1,t._2) }
     }
 
     //标准化得分 breeze.linalg.normalize
