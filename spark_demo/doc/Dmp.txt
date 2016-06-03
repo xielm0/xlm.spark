@@ -1,0 +1,6 @@
+注意使用protoc2,proto3与protoc2有很大区别:
+
+protoc -I=D:\jdspace\ads_sz_dev.data_proj\datahouse\spark\spark_demo --java_out=D:\jdspace\ads_sz_dev.data_proj\datahouse\spark\spark_demo\src\main\java D:\jdspace\ads_sz_dev.data_proj\datahouse\spark\spark_demo\src\main\resources\places.proto
+
+protoc -I=D:\jdspace\ads_sz_dev.data_proj\datahouse\spark\spark_demo --java_out=D:\jdspace\ads_sz_dev.data_proj\datahouse\spark\spark_demo\src\main\java D:\jdspace\ads_sz_dev.data_proj\datahouse\spark\spark_demo\src\main\resources\address_book.proto
+

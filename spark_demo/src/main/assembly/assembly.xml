@@ -1,0 +1,35 @@
+<assembly>
+	<id>dist</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/lib</outputDirectory>
+			<useProjectArtifact>true</useProjectArtifact>
+			<scope>runtime</scope>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/assembly</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>bin/*.sh</include>
+			</includes>
+			<fileMode>755</fileMode>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/resources</directory>
+			<!--<directory>src/test/resources</directory>-->
+			<outputDirectory>/classes</outputDirectory>
+			<includes>
+				<include>*.txt</include>
+				<include>*.xml</include>
+				<include>*.properties</include>
+				<include>datasource/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>
