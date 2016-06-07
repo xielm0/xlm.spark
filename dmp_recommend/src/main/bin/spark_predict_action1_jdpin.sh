@@ -11,5 +11,5 @@ spark-submit --master yarn-client \
     --executor-memory 8g --executor-cores 4 \
    --class com.jd.szad.itemcf.app \
    dmp_recommend.jar  \
-   predict app.db/app_szad_m_dmp_itemcf_apply_day_jdpin/action_type=5 800 \
-   app.db/app_szad_m_dmp_itemcf_res/action_type=5  pp.db/app_szad_m_dmp_recommend_itemcf_res_jdpin/action_type=5
+   predict app.db/app_szad_m_dmp_itemcf_apply_day_jdpin/action_type=1  1000 \
+   app.db/app_szad_m_dmp_itemcf_res/action_type=1  app.db/app_szad_m_dmp_recommend_itemcf_res_jdpin/action_type=1

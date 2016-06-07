@@ -4,29 +4,11 @@
  */
 package com.jd.szad.itemcf
 
-import org.apache.hadoop.conf.Configuration
-import org.apache.hadoop.fs.{FileSystem, Path}
+import org.apache.spark.rdd.RDD
 import org.apache.spark.storage.StorageLevel
-import org.apache.spark.{SparkConf, SparkContext}
 
 
 object itemCF {
-  def main(args:Array[String]) {
-    val conf = new SparkConf().setAppName("itemCF")
-      .set("spark.akka.timeout", "1000")
-      .set("spark.rpc.askTimeout", "500")
-      .set("spark.storage.memoryFraction","0.1")  //not use cache(),so not need storage memory
-    //.set("spark.shuffle.memoryFraction","0.3")
-
-    val input_path :String = args(0)
-    val part_num :Int = args(1).toInt
-    val output_path:String = args(2)
-
-    val sc = new SparkContext(conf)
-
-    compute_sim(sc,input_path,output_path,part_num)
-
-  }
 
   /*分别计算每个user的(item,item)相似性的分子
   输入x=(user,(item1,item2,...))
@@ -48,36 +30,29 @@ object itemCF {
       yield { ((item1,item2),1)}
   }
 
-  def compute_sim(sc :SparkContext ,
-                  input_path :String ,
-                  output_path:String,
-                  part_num :Int )={
-    //val input: String = "app.db/app_szad_m_dmp_itemcf_train_day/action_type=1/000000_0.lzo"
-    val input: String = input_path
-    val data=sc.textFile(input).repartition(part_num)
+  def compute_sim( user_action :RDD[UserItem] ,part_num:Int  ,k :Int): RDD[ItemSimi] ={
 
     //为了节省内存，将item由字符串转换为int型。
-    val item_map = data.map(_.split("\t")(1)).distinct(100).zipWithIndex().map(t=> (t._1,t._2.toInt)).cache()
-    val user_item = data.map( _.split("\t") match{ case Array(user,item,rate) =>(item,user)})
+    val item_map = user_action .map (t=> t.itemid).distinct(100).zipWithIndex().map(t=> (t._1,t._2.toInt)).cache()
+
+    val user_item = user_action.map(t=>(t.itemid,t.userid))
       .join(item_map)
-      .map{case (item,(user,item_id)) => (user,item_id)}.persist(StorageLevel.DISK_ONLY )
-    //val user_item=data.map( _.split("\t") match{ case Array(user,item,rate) =>(user,item.toLong)}).persist(StorageLevel.DISK_ONLY )
+      .map{case (item,(user,item_num)) => (user,item_num)}.persist(StorageLevel.DISK_ONLY )
 
     val item_freq = user_item.map{t=>(t._2,1)}.reduceByKey(_+_)
 
     // return (user,Array(item1,item2,...))
-    val user_vectors = user_item.groupByKey()
+    val user_vectors = user_item.groupByKey().persist(StorageLevel.DISK_ONLY )
 
-    //compute sim
+    //
     val sim_numerator = user_vectors.flatMap{x=> compute_numerator(x._2)}.reduceByKey(_+_)
-    //val sim_numerator = user_vectors.mapPartitions{ p => p.flatMap(x=> compute_numerator(x._2)).reduce()}
 
     //compute item pair interaction
     val item_join= user_vectors.flatMap{x=> compute_numerator2(x._2)}.reduceByKey(_+_)
 
     //计算(item,item)相似性计算的分母，即并集.返回 ((item_1,item2),score)
     //并集=item1集合 + item2集合 - 交集
-    val sim_denominator = item_join.map{case ((item1,item2),num) => (item1,(item2,num)) }
+    val sim_denominator = item_join.map{ case ((item1,item2),num) => (item1,(item2,num)) }
       .join(item_freq).map{case  (item1,((item2,num),fre1)) => (item2,(item1,fre1,num))}
       .join(item_freq).map{case  (item2,((item1,fre1,num),fre2)) =>
       ((item1,item2) , fre1 + fre2 - num)
@@ -86,36 +61,28 @@ object itemCF {
     val sim= sim_numerator.join(sim_denominator).map{
       case((item1,item2),(num,denom)) => (item1,item2 ,num/denom )}
 
-    //top10
+    //topk
     val pair_topk = sim.map{case (item1,item2,score) => (item1,(item2,score))}.groupByKey().flatMap{
       case( a, b)=>  //b=Interable[(item2,score)]
-        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(10)
+        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(k)
         topk.map{ t => (a,t._1,t._2) }
     }
 
     //标准化得分 breeze.linalg.normalize
     val value_max= pair_topk.map( _._3 ).max()
-    val value_min= pair_topk.map( _._3 ).min()
+    val value_min= 0
 
     val similary = pair_topk.map{case(item1,item2,score)=>(item1,item2,math.round(100.0*(score-value_min)/(value_max - value_min))/100.0 )}.filter(t=>t._3>0)
 
-    //转换回string
+    //转换回Long
     val similary_res = similary.map(t=> (t._1,(t._2,t._3)))
       .join(item_map.map(_.swap))
       .map{case (id1,((id2,score),item1)) => (id2,(item1,score))}
       .join(item_map.map(_.swap))
       .map{case (id2,((item1,score),item2)) => (item2,item1,score)}
 
-
-    //删除mode文件
-    val conf = new Configuration()
-    val fs = FileSystem.get(conf)
-    fs.delete(new Path( output_path ),true)
-    //保存到数据库
-    similary_res.map(t=> t._1 +"\t" + t._2 +"\t" + t._3)
-      .saveAsTextFile(output_path )
-
-
+    //return
+    similary.map(t=>ItemSimi(t._1,t._2,t._3))
   }
 
 }
