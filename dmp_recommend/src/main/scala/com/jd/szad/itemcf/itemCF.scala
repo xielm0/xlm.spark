@@ -33,16 +33,18 @@ object itemCF {
   def compute_sim( user_action :RDD[UserItem] ,part_num:Int  ,k :Int): RDD[ItemSimi] ={
 
     //为了节省内存，将item由字符串转换为int型。
-    val item_map = user_action .map (t=> t.itemid).distinct(100).zipWithIndex().map(t=> (t._1,t._2.toInt)).cache()
+    val item_map = user_action .map (t=> t.itemid).distinct(part_num/10).zipWithIndex().map(t=> (t._1,t._2.toInt)).cache()
+    print("item count is " +item_map.count() )
 
     val user_item = user_action.map(t=>(t.itemid,t.userid))
       .join(item_map)
-      .map{case (item,(user,item_num)) => (user,item_num)}.persist(StorageLevel.DISK_ONLY )
+      .map{case (item,(user,item_num)) => (user,item_num)}
 
-    val item_freq = user_item.map{t=>(t._2,1)}.reduceByKey(_+_)
-
+    val item_freq = user_item.map{t=>(t._2,1)}.reduceByKey(_+_).persist(StorageLevel.MEMORY_AND_DISK )
+    item_freq.first()
     // return (user,Array(item1,item2,...))
     val user_vectors = user_item.groupByKey().persist(StorageLevel.DISK_ONLY )
+    print("user count is " +user_vectors.count() )
 
     //
     val sim_numerator = user_vectors.flatMap{x=> compute_numerator(x._2)}.reduceByKey(_+_)
@@ -70,7 +72,8 @@ object itemCF {
 
     //标准化得分 breeze.linalg.normalize
     val value_max= pair_topk.map( _._3 ).max()
-    val value_min= 0
+    val value_min= 0 // not equal 0 ,but approximation 0
+    print("max score =" + value_max)
 
     val similary = pair_topk.map{case(item1,item2,score)=>(item1,item2,math.round(100.0*(score-value_min)/(value_max - value_min))/100.0 )}.filter(t=>t._3>0)
 

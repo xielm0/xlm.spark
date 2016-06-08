@@ -1,5 +1,6 @@
 package com.jd.szad.itemcf
 
+import com.jd.szad.tools.Writer
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -19,9 +20,9 @@ object app {
     val input_path :String = args(1)
     val part_num :Int = args(2).toInt
     val model_path :String =args(3)
-    val output_path:String = args(4)
 
     if (model_type =="train") {
+      //val data = sc.textFile("app.db/app_szad_m_dmp_itemcf_train_day/action_type=5/000000_0.lzo").sample(false,0.1)
       val data=sc.textFile(input_path).repartition(part_num)
 
       val user_item = data.map( _.split("\t") match{ case Array(user,item,rate) =>UserItem(user,item.toLong)})
@@ -34,6 +35,9 @@ object app {
       Writer.write_table(similary,model_path)
 
     } else if (model_type =="predict") {
+
+      val output_path:String = args(4)
+
       val user = sc.textFile(input_path,part_num).map(_.split("\t")).map(t=>UserPref(t(0) ,t(1).toLong,t(2).toInt))
 
       val sim = sc.textFile(model_path).map(_.split("\t")).map(t=>ItemSimi(t(0).toLong ,t(1).toLong,t(2).toDouble))
