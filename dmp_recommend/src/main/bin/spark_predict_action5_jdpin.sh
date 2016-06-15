@@ -9,7 +9,6 @@
 spark-submit --master yarn-client \
    --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=100 \
     --executor-memory 8g --executor-cores 4 \
-   --class com.jd.szad.itemcf.app \
-   dmp_recommend.jar  \
+   --class com.jd.szad.itemcf.app dmp_recommend.jar \
    predict app.db/app_szad_m_dmp_itemcf_apply_day_jdpin/action_type=5 800 \
-   app.db/app_szad_m_dmp_itemcf_res/action_type=5  pp.db/app_szad_m_dmp_recommend_itemcf_res_jdpin/action_type=5
+   app.db/app_szad_m_dmp_itemcf_res/action_type=5  app.db/app_szad_m_dmp_recommend_itemcf_res_jdpin/action_type=5

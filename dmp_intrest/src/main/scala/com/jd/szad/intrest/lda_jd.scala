@@ -1,5 +1,6 @@
 package com.jd.szad.intrest
 
+import com.jd.szad.tools.Writer
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.mllib.clustering.{DistributedLDAModel, LDA, LDAModel, LocalLDAModel}
@@ -57,7 +58,6 @@ object lda_jd {
     val vocabArray = vocab.collect
 
     //读取数据
-    //file format： gdt_openid,user_id,cateCnt
     //val textRDD= sc.textFile("app.db/app_szad_m_dmp_label_intrest_jdpin_train/000000_0.lzo").sample(false,0.05)
     val textRDD = sc.textFile(input_path).repartition(num_partitions)
     //将jdpin转成user_id,int
@@ -118,25 +118,9 @@ object lda_jd {
       }
 
       //将主题映射保存到hadoop
-//      fs.delete(new Path( "app.db/app_szad_m_dmp_label_intrest_topic_jdpin/dp=ACTIVE/dt=4712-12-31/*"),true)
-//      sc.parallelize(topics)
-//        .map(t=>t._1 +"\t"+t._2 +"\t"+t._3 +"\t"+t._4 +"\t"+t._5 +"\t"+t._6 +"\t"+t._7 +"\t"+t._8 +"\t"+t._9 +"\t"+t._10 +"\t"+t._11)
-//        .saveAsTextFile("app.db/app_szad_m_dmp_label_intrest_topic_jdpin/dp=ACTIVE/dt=4712-12-31/")
-
-      //hive
-      val hiveContext = new org.apache.spark.sql.hive.HiveContext(sc)
-      import hiveContext.implicits._
-
-      hiveContext.sql("use app")
-      val topic_DF=sc.parallelize(topics).repartition(1).toDF("topic_id","word1","score1","word2","score2","word3","score3","word4","score4","word5","score5")
-      topic_DF.registerTempTable("topic_table")
-
-      val sql_text2 = "insert overwrite table app_szad_m_dmp_label_intrest_topic_jdpin partition(dp='ACTIVE',dt='4712-12-31' )  " +
-        "select  topic_id ,word1, score1,word2, score2,word3, score3,word4, score4,word5, score5 from topic_table"
-
-      //hiveContext.sql("set hive.exec.compress.output=true")
-      //hiveContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
-      hiveContext.sql(sql_text2)
+      val contents_topic = sc.parallelize(topics)
+        .map(t=> t._1 +"\t"+t._2+"\t"+t._3+"\t"+t._4+"\t"+t._5+"\t"+t._6+"\t"+t._7+"\t"+t._8+"\t"+t._9+"\t"+t._10+"\t"+t._11)
+      Writer.write_table(contents_topic,"app.db/app_szad_m_dmp_label_intrest_topic_jdpin/dp=ACTIVE/dt=4712-12-31")
 
       //topicDistributions   返回训练文档的主题分布概率
       val distLDAModel = ldaModel.asInstanceOf[DistributedLDAModel]
@@ -166,7 +150,9 @@ object lda_jd {
         }
       }
 
-      val res = predict(corpus,sameModel).join(user_rdd.map(_.swap)).map{case(user_id,(docTopicsWeight,jdpin))=>(jdpin,docTopicsWeight)}
+      val res = predict(corpus,sameModel)
+        .join(user_rdd.map(_.swap))
+        .map{case(user_id,(docTopicsWeight,jdpin))=>(jdpin,docTopicsWeight)}
 
       //取topk , k=2
       val result = res.map{case(doc_id,docTopicsWeight)=>
@@ -181,24 +167,9 @@ object lda_jd {
       }*/
 
       //保存到hadoop
-//      val hiveContext = new org.apache.spark.sql.hive.HiveContext(sc)
-//      import hiveContext.implicits._
-//
-//      hiveContext.sql("use app")
-//      val instrest = result.toDF("doc_id", "topic")
-//      instrest.registerTempTable("table1")
-//      val sql_text = "insert overwrite table app_szad_m_dmp_label_intrest_res_jdpin select  doc_id ,null, topic from table1"
-//
-//      hiveContext.sql("set hive.exec.compress.output=true")
-//      hiveContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
-//      hiveContext.sql(sql_text)
 
-      val conf = new Configuration()
-      val fs = FileSystem.get(conf)
-      fs.delete(new Path( target_path ),true)
-
-      result.map(t=> t._1 +"\t" + "" +"\t" + t._2)
-        .saveAsTextFile(target_path)
+      val contents = result.map(t=> t._1 +"\t" + "" +"\t" + t._2)
+      Writer.write_table(contents,target_path)
 
     }
     sc.stop()

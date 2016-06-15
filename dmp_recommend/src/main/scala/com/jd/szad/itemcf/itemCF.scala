@@ -33,7 +33,7 @@ object itemCF {
   def compute_sim( user_action :RDD[UserItem] ,part_num:Int  ,k :Int): RDD[ItemSimi] ={
 
     //为了节省内存，将item由字符串转换为int型。
-    val item_map = user_action .map (t=> t.itemid).distinct(part_num/10).zipWithIndex().map(t=> (t._1,t._2.toInt)).cache()
+    val item_map = user_action .map (t=> t.itemid).distinct(part_num).zipWithIndex().map(t=> (t._1,t._2.toInt)).cache()
     print("item count is " +item_map.count() )
 
     val user_item = user_action.map(t=>(t.itemid,t.userid))
@@ -75,7 +75,7 @@ object itemCF {
     val value_min= 0 // not equal 0 ,but approximation 0
     print("max score =" + value_max)
 
-    val similary = pair_topk.map{case(item1,item2,score)=>(item1,item2,math.round(100.0*(score-value_min)/(value_max - value_min))/100.0 )}.filter(t=>t._3>0)
+    val similary = pair_topk.map{case(item1,item2,score)=>(item1,item2,math.round(1000*(score-value_min)/(value_max - value_min))/1000.0 )}.filter(t=>t._3>0)
 
     //转换回Long
     val similary_res = similary.map(t=> (t._1,(t._2,t._3)))
@@ -85,7 +85,7 @@ object itemCF {
       .map{case (id2,((item1,score),item2)) => (item2,item1,score)}
 
     //return
-    similary.map(t=>ItemSimi(t._1,t._2,t._3))
+    similary_res.map(t=>ItemSimi(t._1,t._2,t._3))
   }
 
 }

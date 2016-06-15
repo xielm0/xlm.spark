@@ -3,6 +3,7 @@
 dt=`date -d last-day +%Y-%m-%d`
 queue=bdp_jmart_adv.bdp_jmart_sz_ad
 
+#spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
 spark-submit --master yarn-client \
    --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=100 \
    --executor-memory 10g --executor-cores 4 \

@@ -1,6 +1,7 @@
 package com.jd.szad.itemcf
 
 import com.jd.szad.tools.Writer
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -22,7 +23,7 @@ object app {
     val model_path :String =args(3)
 
     if (model_type =="train") {
-      //val data = sc.textFile("app.db/app_szad_m_dmp_itemcf_train_day/action_type=5/000000_0.lzo").sample(false,0.1)
+      //val data = sc.textFile("app.db/app_szad_m_dmp_itemcf_train_day/action_type=1/000000_0.lzo").sample(false,0.1)
       val data=sc.textFile(input_path).repartition(part_num)
 
       val user_item = data.map( _.split("\t") match{ case Array(user,item,rate) =>UserItem(user,item.toLong)})
@@ -38,7 +39,13 @@ object app {
 
       val output_path:String = args(4)
 
-      val user = sc.textFile(input_path,part_num).map(_.split("\t")).map(t=>UserPref(t(0) ,t(1).toLong,t(2).toInt))
+      val user = sc.textFile(input_path).coalesce(part_num,false).map{t=>
+        val x=t.split("\t")
+        if (x(1) != "\\N") UserPref(x(0) ,x(1).toLong,x(2).toInt)
+        else UserPref(x(0) ,0,x(2).toInt)
+      }.persist(StorageLevel.MEMORY_AND_DISK)
+
+      print("user count is " +user.count() )
 
       val sim = sc.textFile(model_path).map(_.split("\t")).map(t=>ItemSimi(t(0).toLong ,t(1).toLong,t(2).toDouble))
 

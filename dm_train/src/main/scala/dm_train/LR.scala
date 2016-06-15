@@ -11,7 +11,7 @@ import org.apache.spark.{SparkConf, SparkContext}
  */
 object LR {
   def main(args:Array[String]) {
-    val sparkConf = new SparkConf().setAppName("DecisionTree")
+    val sparkConf = new SparkConf().setAppName("LR")
     val sc = new SparkContext(sparkConf)
 
     val data = sc.textFile("app.db/app_szad_m_dmp_label_gender_xlm") //return array[string]

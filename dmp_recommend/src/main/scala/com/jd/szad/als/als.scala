@@ -4,8 +4,8 @@ package com.jd.szad.als
  * Created by xieliming on 2016/3/31.
  */
 
-import org.apache.hadoop.conf.Configuration
-import org.apache.hadoop.fs.{Path, FileSystem}
+import com.jd.szad.tools.Writer
+import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rating}
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
@@ -45,16 +45,17 @@ object als {
       .persist(StorageLevel.DISK_ONLY)
 
     //lambda=0.01 //lambad是用来防止过拟合的。
-    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, 0.01, 100 )
+    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.01, blocks=100 )
+
+    val userf = model.userFeatures
+    val productf = model.productFeatures
 
     //隐式反馈
     //    val alpha=0.01
     //    val model = ALS.trainImplicit(ratings, rank, numIterations, lambda, alpha)
 
-    //训练时用来评估的
-    //    val usersProducts = ratings.map { case Rating(user, product, rate) =>
-    //      (user, product)
-    //    }
+    //评估
+    //    val usersProducts = ratings.map { case Rating(user, product, rate) => (user, product) }
     //    val predictions =
     //      model.predict(usersProducts).map { case Rating(user, product, rate) =>
     //        ((user, product), rate)
@@ -67,14 +68,11 @@ object als {
     //      err * err
     //    }.mean()
     //    println("Mean Squared Error = " + MSE)
-    //MSE: Double = 0.7326887970584651
+    // MSE: Double = 0.7326887970584651
 
     //     Save and load model
     //     save userFeatures and productFeatures
-    val conf = new Configuration()
-    val fs = FileSystem.get(conf)
-
-    fs.delete(new Path( myModelPath ),true)
+    FileSystem.get(sc.hadoopConfiguration).delete(new Path( myModelPath ),true)
     model.save(sc, myModelPath)
 
     // val sameModel = MatrixFactorizationModel.load(sc, myModelPath)
@@ -82,12 +80,13 @@ object als {
     //    推荐
     //    思路1：
     //    批量推荐，直接使用 recommendProductsForUsers，返回(user, ratings) ,1.5.2后可以使用
+    //    使用
     val res_rdd = model.recommendProductsForUsers(6).flatMap { case (user, array_rating) =>
       array_rating.map { case Rating(a, b, c) => a +"\t" + b + "\t" + c }
     }
 
 
-    //    思路21：
+    //    思路2：
     //    找出用户列表，循环，每次调用model.recommendProducts(user_id,num)得到推荐的结果。
     //    推荐的核心计算是利用 userFeatures x productFeatures的转置 计算得分rate,.
     //    在这里注意，recommendProducts已经调用了一个rdd: userFeatures，所以user不能是RDD，因为RDD不能嵌套使用。
@@ -101,9 +100,7 @@ object als {
 
 
     //保存推荐结果
-
-    fs.delete(new Path( output ),true)
-    res_rdd.saveAsTextFile(output)
+     Writer.write_table(res_rdd,output)
 
 
   }
