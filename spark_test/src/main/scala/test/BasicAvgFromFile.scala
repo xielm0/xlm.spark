@@ -1,7 +1,7 @@
 /**
  * Illustrates loading a simple text file
  */
-package com.jd.ads.demo
+package test
 
 import org.apache.spark._
 

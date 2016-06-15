@@ -1,7 +1,7 @@
 /**
  * Illustrates flatMap + countByValue for wordcount.
  */
-package com.jd.ads.demo
+package test
 
 import org.apache.spark._
 

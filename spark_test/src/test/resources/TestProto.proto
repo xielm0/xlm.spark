@@ -1,7 +1,0 @@
-option java_package = "com.jd.ads.proto";
-
-option java_outer_classname = "TestProto";
-
-message TestData {
-    optional string greeting = 1;
-}
