@@ -1,4 +1,4 @@
-package com.jd.szad.childmom
+package test.childmom
 
 /**
  * Created by xieliming on 2016/6/1.
