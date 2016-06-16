@@ -10,17 +10,7 @@ import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rat
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
-/*
- nohup spark-submit --master yarn-client \
- --class com.jd.szad.recommend.als  \
- --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true --conf spark.dynamicAllocation.maxExecutors=100 \
- --executor-memory 12g --executor-cores 4 \
- --conf spark.shuffle.memoryFraction=0.3 \
- /home/jd_ad/data_dir/xieliming/spark_szad_label_xlm.jar \
- app.db/app_szad_m_dmp_als_train/user_type=1 20 5 800 app.db/app_szad_m_dmp_als_res/user_type=1 app.db/app_szad_m_dmp_als_model/user_type=1 &
 
- --num-executors 100 --executor-memory 12 --executor-cores 4 \
-  */
 object als {
   def main(args: Array[String]) {
     val sparkConf = new SparkConf()
@@ -33,7 +23,7 @@ object als {
 
     //val input: String = "app.db/app_szad_m_dmp_als_train/user_type=1/000000_0.lzo"
     val input: String = args(0)
-    val rank = args(1).toInt //秩 20
+    val rank = args(1).toInt //秩 100
     val numIterations = args(2).toInt //20
     val partition_num = args(3).toInt
     val output:String = args(4)
@@ -45,10 +35,7 @@ object als {
       .persist(StorageLevel.DISK_ONLY)
 
     //lambda=0.01 //lambad是用来防止过拟合的。
-    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.01, blocks=100 )
-
-    val userf = model.userFeatures
-    val productf = model.productFeatures
+    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.01, blocks=50 )
 
     //隐式反馈
     //    val alpha=0.01
@@ -80,11 +67,10 @@ object als {
     //    推荐
     //    思路1：
     //    批量推荐，直接使用 recommendProductsForUsers，返回(user, ratings) ,1.5.2后可以使用
-    //    使用
-    val res_rdd = model.recommendProductsForUsers(6).flatMap { case (user, array_rating) =>
+    //    进行了笛卡尔计算，根本出不来结果
+    val res_rdd = model.recommendProductsForUsers(5).flatMap { case (user, array_rating) =>
       array_rating.map { case Rating(a, b, c) => a +"\t" + b + "\t" + c }
     }
-
 
     //    思路2：
     //    找出用户列表，循环，每次调用model.recommendProducts(user_id,num)得到推荐的结果。
@@ -93,15 +79,49 @@ object als {
     //    rdd1.map(x => rdd2.values.count() * x) is invalid because the values transformation and count action cannot be performed inside of the rdd1.map transformation.
     /*    val users = ratings.map { case Rating(user, product, rate) => user }.distinct(10).take(10000) //.collect()
         val res = users.flatMap(
-            user => model.recommendProducts(user, 10) //return  Array[Rating]
+            user => model.recommendProducts(user, 5) //return  Array[Rating]
           )
-        val res_rdd = sc.makeRDD(res).map { case Rating(user, product, rate) => (user, product, rate) }
+        val res_rdd = sc.makeRDD(res,100).map { case Rating(user, product, rate) => (user, product, rate) }
     */
 
+    //  思路3
+    //  对 productFeatures 做缩减,每个k取前N个商品
+//    val n = 1000
+//    val productF = model.productFeatures.flatMap{case(item_id,factor)=>
+//      val a = factor.zipWithIndex
+//      a.map(t=> (t._2,(item_id,t._1)))
+//    }.combineByKey(
+//      createCombiner = v => Array(v) ,
+//      mergeValue =(c: Array[(Int,Double)], v: (Int,Double)) => {
+//        val a = c :+ v
+//        a.sortBy(_._2).reverse.slice(0,n)
+//      } ,
+//      mergeCombiners = (c1: Array[(Int,Double)], c2: Array[(Int,Double)]) => {
+//        val a = c1 ++ c2
+//        a.sortBy(_._2).reverse.slice(0,n)
+//      }
+//    ).flatMap{t =>
+//      t._2.map(x => (x._1,(x._2,t._1)) )
+//    }.groupByKey()
+//    .map( t => (t._1 , toFactor(t._2, n ))  )
+//
+//    // new MatrixFactorizationModel
+//    val model2 = new MatrixFactorizationModel(model.rank,model.userFeatures,productF )
+//
+//    val res_rdd2 = model2.recommendProductsForUsers(5).flatMap { case (user, array_rating) =>
+//      array_rating.map { case Rating(a, b, c) => a +"\t" + b + "\t" + c }
+//    }
 
     //保存推荐结果
      Writer.write_table(res_rdd,output)
 
+  }
 
+  def toFactor( x : Iterable[(Double,Int)] , n : Int) = {
+    val Arr = new Array[Double](n)
+    x.foreach{ case(a,b) =>
+      Arr(b)=a
+    }
+    Arr
   }
 }
