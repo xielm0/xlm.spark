@@ -17,5 +17,6 @@ object Writer {
     rdd_context.saveAsTextFile(hdfs_path )
   }
 
+  //model.userFeatures.toDF("id", "features").write.parquet(userPath(path))
 
 }

@@ -4,17 +4,15 @@ package com.jd.szad.als
  * Created by xieliming on 2016/3/31.
  */
 
-import com.jd.szad.tools.Writer
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rating}
-import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
 
 object als {
   def main(args: Array[String]) {
     val sparkConf = new SparkConf()
-      .setAppName("ALS_recommend")
+      .setAppName("ALS_train")
       .set("spark.akka.timeout", "500")
       .set("spark.rpc.askTimeout", "500")
     //.set("spark.akka.frameSize", "128")
@@ -32,14 +30,19 @@ object als {
     val data = sc.textFile(input).repartition(partition_num)   //.sample(false, 0.1)
 
     val ratings = data.map(_.split("\t") match  {case Array(user,item,rate) =>Rating(user.toInt,item.toInt,rate.toDouble)} )
-      .persist(StorageLevel.DISK_ONLY)
 
     //lambda=0.01 //lambad是用来防止过拟合的。
-    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.01, blocks=50 )
+    //blocks不能太少，否则train不出来结果。 block大于100，则在remmend时，笛卡尔不能接受
+    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.01)
 
     //隐式反馈
     //    val alpha=0.01
     //    val model = ALS.trainImplicit(ratings, rank, numIterations, lambda, alpha)
+
+    //     Save and load model
+    //     save userFeatures and productFeatures
+    FileSystem.get(sc.hadoopConfiguration).delete(new Path( myModelPath ),true)
+    model.save(sc, myModelPath)
 
     //评估
     //    val usersProducts = ratings.map { case Rating(user, product, rate) => (user, product) }
@@ -57,20 +60,15 @@ object als {
     //    println("Mean Squared Error = " + MSE)
     // MSE: Double = 0.7326887970584651
 
-    //     Save and load model
-    //     save userFeatures and productFeatures
-    FileSystem.get(sc.hadoopConfiguration).delete(new Path( myModelPath ),true)
-    model.save(sc, myModelPath)
-
     // val sameModel = MatrixFactorizationModel.load(sc, myModelPath)
 
     //    推荐
     //    思路1：
     //    批量推荐，直接使用 recommendProductsForUsers，返回(user, ratings) ,1.5.2后可以使用
     //    进行了笛卡尔计算，根本出不来结果
-    val res_rdd = model.recommendProductsForUsers(5).flatMap { case (user, array_rating) =>
-      array_rating.map { case Rating(a, b, c) => a +"\t" + b + "\t" + c }
-    }
+//    val res_rdd = model.recommendProductsForUsers(5).flatMap { case (user, array_rating) =>
+//      array_rating.map { case Rating(a, b, c) => a +"\t" + b + "\t" + c }
+//    }
 
     //    思路2：
     //    找出用户列表，循环，每次调用model.recommendProducts(user_id,num)得到推荐的结果。
@@ -103,25 +101,18 @@ object als {
 //    ).flatMap{t =>
 //      t._2.map(x => (x._1,(x._2,t._1)) )
 //    }.groupByKey()
-//    .map( t => (t._1 , toFactor(t._2, n ))  )
+//    .map( t => (t._1 , toFactor(t._2, rank ))  )
 //
+//    println("productF column is :" + productF.first()._2.length)
 //    // new MatrixFactorizationModel
-//    val model2 = new MatrixFactorizationModel(model.rank,model.userFeatures,productF )
+//    val model2 = new MatrixFactorizationModel(model.rank,model.userFeatures,productF.repartition(10) )
 //
-//    val res_rdd2 = model2.recommendProductsForUsers(5).flatMap { case (user, array_rating) =>
+//    val res_rdd = model2.recommendProductsForUsers(5).flatMap { case (user, array_rating) =>
 //      array_rating.map { case Rating(a, b, c) => a +"\t" + b + "\t" + c }
 //    }
 
     //保存推荐结果
-     Writer.write_table(res_rdd,output)
+//     Writer.write_table(res_rdd,output)
 
-  }
-
-  def toFactor( x : Iterable[(Double,Int)] , n : Int) = {
-    val Arr = new Array[Double](n)
-    x.foreach{ case(a,b) =>
-      Arr(b)=a
-    }
-    Arr
   }
 }
