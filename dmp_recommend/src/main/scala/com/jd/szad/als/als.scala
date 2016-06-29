@@ -12,7 +12,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object als {
   def main(args: Array[String]) {
     val sparkConf = new SparkConf()
-      .setAppName("ALS_train")
+      .set("spark.app.name","ALS_train")
       .set("spark.akka.timeout", "500")
       .set("spark.rpc.askTimeout", "500")
     //.set("spark.akka.frameSize", "128")
@@ -24,8 +24,8 @@ object als {
     val rank = args(1).toInt //秩 100
     val numIterations = args(2).toInt //20
     val partition_num = args(3).toInt
-    val output:String = args(4)
-    val myModelPath:String = args(5)
+    val myModelPath:String = args(4)
+    //val output:String = args(5)
 
     val data = sc.textFile(input).repartition(partition_num)   //.sample(false, 0.1)
 

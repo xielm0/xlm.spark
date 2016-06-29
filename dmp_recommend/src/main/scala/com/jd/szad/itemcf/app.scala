@@ -9,7 +9,8 @@ import org.apache.spark.{SparkConf, SparkContext}
  */
 object app {
   def main(args:Array[String]) {
-    val conf = new SparkConf().setAppName("itemCF")
+    val conf = new SparkConf()
+      .setAppName("itemCF")
       .set("spark.akka.timeout", "1000")
       .set("spark.rpc.askTimeout", "500")
       .set("spark.storage.memoryFraction","0.1")  //not use cache(),so not need storage memory
@@ -34,6 +35,7 @@ object app {
 
       //保存到hdfs
       Writer.write_table(similary,model_path)
+      //Writer.write_table(similary,model_path,"lzo")
 
     } else if (model_type =="predict") {
 
