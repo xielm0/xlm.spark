@@ -12,11 +12,10 @@ user_type=$3
 
 source /home/jd_ad/.bashrc
 jars=$(echo $SPARK_HOME/lib/datanucleus*.jar | tr ' ' ',')
-dir='/data0/task/edw/etl/spark/dmp_recommend'
+dir='/home/jd_ad/spark_task/dmp_recommend'
 cd ${dir}
 
-#spark-submit --master yarn-client \
-spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
+spark-submit --master yarn-client \
  --jars $jars \
  --conf "spark.driver.extraJavaOptions=-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data1/yarn-logs/am_dump -XX:PermSize=1g -XX:MaxPermSize=1g" \
  --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=10 \

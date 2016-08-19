@@ -30,7 +30,7 @@ object app {
       val user_item = data.map( _.split("\t") match{ case Array(user,item,rate) =>UserItem(user,item.toLong)})
 
       //计算相似度
-      val similary = itemCF.compute_sim(user_item,part_num,10)
+      val similary = itemCF.compute_sim(sc,user_item,part_num,10)
         .map(t=>t.itemid1 +"\t" + t.itemid2 +"\t" + t.similar)
 
       //保存到hdfs
@@ -40,8 +40,8 @@ object app {
     } else if (model_type =="predict") {
 
       val output_path:String = args(4)
-
-      val user = sc.textFile(input_path).coalesce(part_num,false).map{t=>
+      print ("input_path:",input_path)
+      val user = sc.textFile(input_path).repartition(part_num).map{t=>
         val x=t.split("\t")
         if (x(1) != "\\N") UserPref(x(0) ,x(1).toLong,x(2).toInt)
         else UserPref(x(0) ,0,x(2).toInt)

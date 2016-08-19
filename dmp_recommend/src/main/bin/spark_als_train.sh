@@ -5,12 +5,11 @@ echo $dt
 
 source /home/jd_ad/.bashrc
 jars=$(echo $SPARK_HOME/lib/datanucleus*.jar | tr ' ' ',')
-dir='/data0/task/edw/etl/spark/dmp_recommend'
+dir='/home/jd_ad/spark_task/dmp_recommend'
 cd ${dir}
 
 #spark-submit --master yarn-client \
 spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
- --jars ${jars} \
  --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=100 \
  --executor-memory 8g \
  --executor-cores 4 \
