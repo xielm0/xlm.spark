@@ -11,6 +11,7 @@ dir='/home/jd_ad/spark_task/dmp_recommend'
 cd ${dir}
 #spark-submit --master yarn-client \
 spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
+ --conf spark.app.name=itemcf_train1 \
  --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=100 \
  --driver-memory 4g \
  --executor-memory 8g \
