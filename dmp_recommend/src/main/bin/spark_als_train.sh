@@ -10,8 +10,9 @@ cd ${dir}
 
 #spark-submit --master yarn-client \
 spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
+ --conf "spark.executor.extraJavaOptions=-Xss10m" \
  --conf spark.dynamicAllocation.enabled=true  --conf spark.shuffle.service.enabled=true  --conf spark.dynamicAllocation.maxExecutors=100 \
- --executor-memory 8g \
+ --executor-memory 10g \
  --executor-cores 4 \
  --conf spark.shuffle.memoryFraction=0.3 \
  --class com.jd.szad.als.als dmp_recommend.jar \
