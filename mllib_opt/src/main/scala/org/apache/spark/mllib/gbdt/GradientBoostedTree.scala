@@ -50,7 +50,7 @@ object GradientBoostedTree {
 
 
    // model train
-    val model = GradientBoostedTrees train(trainingData.toJavaRDD(), boostingStrategy)
+    val model = GradientBoostedTrees.train(trainingData.toJavaRDD(), boostingStrategy)
 
 
     // Evaluate model on test instances and compute test error

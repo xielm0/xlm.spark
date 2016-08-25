@@ -33,7 +33,7 @@ object lda_jd {
       .setAppName("LDA_jdpin")
       .set("spark.akka.timeout", "1000")
       .set("spark.rpc.askTimeout", "500")
-      .set("spark.shuffle.memoryFraction","0.3")
+      //.set("spark.shuffle.memoryFraction","0.3")
       //.set("spark.storage.memoryFraction","0.2")
       //.set("spark.akka.frameSize","128")
 
@@ -107,13 +107,16 @@ object lda_jd {
       //val topics_matrix = ldaModel.topicsMatrix  //this is a matrix of size vocabSize x k, where each column is a topic.
 
       // describeTopics  每个主题的词权重排序
-      val topicIndices = ldaModel.describeTopics(maxTermsPerTopic = 7)
-      val topicIndices2= topicIndices.map { case (terms, termWeights) =>
-        terms.zip(termWeights).flatMap { case (term, weight) =>  Array(vocabArray(term.toInt),  (math.round(weight*100)/100.0).toString  )  }
-      }
+      val topicIndices= ldaModel
+        .describeTopics(maxTermsPerTopic = 7)
+        .map {
+          case (terms, termWeights) =>
+            terms.zip(termWeights)
+              .flatMap { case (term, weight) =>  Array(vocabArray(term.toInt),  (math.round(weight*100)/100.0).toString  )  }
+        }
 
       //对主题进行编号 topic  cate1 score  cate2 score  ... cate5 score5
-      val topics=topicIndices2.zipWithIndex.map(_.swap).map{t=>
+      val topics=topicIndices.zipWithIndex.map(_.swap).map{t=>
         (t._1,t._2(0),t._2(1),t._2(2),t._2(3),t._2(4),t._2(5),t._2(6),t._2(7),t._2(8),t._2(9) )
       }
 
@@ -124,7 +127,6 @@ object lda_jd {
 
       //topicDistributions   返回训练文档的主题分布概率
       val distLDAModel = ldaModel.asInstanceOf[DistributedLDAModel]
-
       println("parameter estimates: logLikelihood="+distLDAModel.logLikelihood)
       println("compute prior log probability: logPrior=" +distLDAModel.logPrior)
 
@@ -132,13 +134,12 @@ object lda_jd {
       //删除mode文件
       fs.delete(new Path( model_path +"/data"),true)
       fs.delete(new Path(  model_path +"/metadata"),true)
-      distLDAModel.save(sc, model_path)
-
+      ldaModel.save(sc, model_path)
 
     }else if(mtype=="predict"){
 
       val sameModel =DistributedLDAModel.load(sc,model_path)
-
+      //val sameModel =LocalLDAModel.load(sc,model_path)
 
       //return An RDD of (document ID, topic mixture distribution for document)
       def predict(documents: RDD[(Long, Vector)], ldaModel: LDAModel): RDD[(Long, Vector)] = {

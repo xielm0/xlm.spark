@@ -8,7 +8,7 @@ import org.apache.spark.{SparkContext, SparkConf}
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
 import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
 import org.apache.spark.mllib.util.MLUtils
-import org.apache.spark.sql.Row
+import org.apache.spark.sql.SQLContext
 object NN {
   def main(args:Array[String]) {
 
@@ -16,6 +16,8 @@ object NN {
     val sc = new SparkContext(sparkConf)
 
     // Load training data
+    val sqlContext = new SQLContext(sc)
+    import sqlContext.implicits._
     val data = MLUtils.loadLibSVMFile(sc, "data/mllib/sample_multiclass_classification_data.txt").toDF()
     // Split the data into train and test
     val splits = data.randomSplit(Array(0.6, 0.4), seed = 1234L)
