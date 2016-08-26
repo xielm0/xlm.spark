@@ -18,6 +18,7 @@ object Byes {
     val org_data = sc.textFile("app.db/app_szad_m_dmp_label_childmom_train")   //return array[string]
 
 
+    //bayes对
     val data = org_data.map { line =>
       val parts = line.split("\t")
       val tag = parts(1).toDouble
@@ -52,7 +53,7 @@ object Byes {
     val training=data0.union(data1)
 
     //默认是modelType = "multinomial"
-    val model_byes = NaiveBayes.train(training, lambda = 1.0, modelType = "multinomial")
+    val model_byes = NaiveBayes.train(training, lambda = 1.0, modelType = "bernoulli")
     //multinomial 多项式分布
 
     //模型评估

@@ -16,7 +16,6 @@ object LR {
 
     val org_data = sc.textFile("app.db/app_szad_m_dmp_label_childmom_train")   //return array[string]
 
-
     val data = org_data.map { line =>
       val parts = line.split("\t")
       val tag = parts(1).toDouble
