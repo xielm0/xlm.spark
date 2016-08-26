@@ -191,7 +191,8 @@ object norm  {
   }
 }
 
-//将特征的字段合并
+
+//将特征的字段混合成一个新字段
 /*
 Assume that we have a DataFrame with the columns id, hour, mobile, userFeatures, and clicked:
 id | hour | mobile | userFeatures     | clicked
