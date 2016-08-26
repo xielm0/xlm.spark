@@ -76,7 +76,7 @@ List(Logistic regression, regression models, models are, are neat)
 */
 
 //转化成0/1 .根据setThreshold的设置
-object binary {
+object binary_split {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("simple").setMaster("local[*]")
     val sc = new SparkContext(conf)
@@ -109,6 +109,7 @@ object binary {
 */
 
 //分桶，也是按照阈值，只是阈值是一个Array .如：Array(Double.NegativeInfinity, -0.5, 0.0, 0.5, Double.PositiveInfinity)
+//缺点是自己要给出阈值。
 object bucket {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("simple").setMaster("local[*]")
@@ -133,6 +134,14 @@ object bucket {
 }
 
 //元素点积
+/*
++---+-------------+-----------------+
+| id|       vector|transformedVector|
++---+-------------+-----------------+
+|  a|[1.0,2.0,3.0]|    [0.0,2.0,6.0]|
+|  b|[4.0,5.0,6.0]|   [0.0,5.0,12.0]|
++---+-------------+-----------------+
+*/
 object Element_wise_Product  {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setAppName("simple").setMaster("local[*]")
@@ -157,13 +166,84 @@ object Element_wise_Product  {
     transformer.transform(dataFrame).show()
   }
 }
+
+//将数值型转换到一个二进制向量列，常用于逻辑回归。
+//图中的例子，是先把“a”“b”“c”转换成数值，再将数值转换为二进制向量。
+object one_hot_encoding  {
+  def main(args: Array[String]): Unit = {
+    val conf = new SparkConf().setAppName("simple").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new SQLContext(sc)
+
+    import org.apache.spark.ml.feature.{OneHotEncoder, StringIndexer}
+
+    val df = sqlContext.createDataFrame(Seq(
+      (0, "a"),
+      (1, "b"),
+      (2, "c"),
+      (3, "a"),
+      (4, "a"),
+      (5, "c")
+    )).toDF("id", "category")
+
+    val indexer = new StringIndexer()  //给index编号
+      .setInputCol("category")
+      .setOutputCol("categoryIndex")
+      .fit(df)
+    val indexed = indexer.transform(df)
+
+    val encoder = new OneHotEncoder().setInputCol("categoryIndex").
+      setOutputCol("categoryVec")
+    val encoded = encoder.transform(indexed)
+    encoded.show()
+  }
+}
 /*
-+---+-------------+-----------------+
-| id|       vector|transformedVector|
-+---+-------------+-----------------+
-|  a|[1.0,2.0,3.0]|    [0.0,2.0,6.0]|
-|  b|[4.0,5.0,6.0]|   [0.0,5.0,12.0]|
-+---+-------------+-----------------+
+| id|category|categoryIndex|  categoryVec|
++---+--------+-------------+-------------+
+|  0|       a|          0.0|(2,[0],[1.0])|
+|  1|       b|          2.0|    (2,[],[])|
+|  2|       c|          1.0|(2,[1],[1.0])|
+|  3|       a|          0.0|(2,[0],[1.0])|
+|  4|       a|          0.0|(2,[0],[1.0])|
+|  5|       c|          1.0|(2,[1],[1.0])|
+*/
+
+
+//VectorIndexer帮助索引类目特征。它能自动决定谁是特征，和将原始值转换为分类值的索引值
+object vector_indexer  {
+  def main(args: Array[String]): Unit = {
+    val conf = new SparkConf().setAppName("simple").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new SQLContext(sc)
+
+    import org.apache.spark.ml.feature.VectorIndexer
+    import org.apache.spark.mllib.util.MLUtils
+    import  sqlContext.implicits._
+
+    val data = MLUtils.loadLibSVMFile(sc, "E://sample_libsvm_data_eg.txt").toDF()
+    //data.show()
+    val indexer = new VectorIndexer()
+      .setInputCol("features")
+      .setOutputCol("indexed")
+      .setMaxCategories(10)  //最大10个分类
+    val indexerModel = indexer.fit(data)
+    val categoricalFeatures: Set[Int] = indexerModel.categoryMaps.keys.toSet
+    println(s"Chose ${categoricalFeatures.size} categorical features: " +  categoricalFeatures.mkString(", "))
+
+    // Create new column "indexed" with categorical values transformed to indices
+    val indexedData = indexerModel.transform(data)
+    indexedData.take(1).foreach(println)
+  }
+}
+/*original _value
+0 28:51 29:59 30:53 31:59
+1 59:24 60:53 61:55 62:63
+1 25:45 26:55 27:11 28:31
+
+Chose 62 categorical features: 0, 5, 10, 56, 42, 24, 37, 25, 52, 14, 20, 46, 57, 29, 61, 1, 6, 60, 28, 38, 21, 33, 9, 53, 13, 41, 2, 32, 34, 45, 17, 22, 44, 59, 27, 12, 54, 49, 7, 39, 3, 35, 48, 18, 50, 16, 31, 11, 43, 40, 26, 55, 23, 8, 58, 36, 30, 51, 19, 4, 47, 15
+
+indexedData: [0.0,(62,[27,28,29,30],[51.0,59.0,53.0,59.0]),(62,[27,28,29,30],[2.0,1.0,1.0,1.0])]  --为什么转化成[2.0,1.0,1.0,1.0] 这样，没搞明白。
 */
 
 //正太分布正则化
