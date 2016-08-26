@@ -1,7 +1,6 @@
 package test
 
 import org.apache.spark.{SparkConf, SparkContext}
-
 import scala.math._
 
 /**
@@ -9,7 +8,7 @@ import scala.math._
  */
 object sparkPi {
   def main(args: Array[String]) {
-    //System.setProperty("hadoop.home.dir", "D:/hadoop/hadoop-2.7.1/");
+
     val conf = new SparkConf().setMaster("local[*]").setAppName("SparkPi")
     //创建环境变量 设置本地模式 设置所要执行APP的名字
     val sc = new SparkContext(conf)
