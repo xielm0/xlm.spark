@@ -66,11 +66,8 @@ object LR {
     //println( matrics_LR.precision(1) , matrics_LR.recall(1) )
     println("precision(1) = " + matrics_LR.confusionMatrix(1,1)/(matrics_LR.confusionMatrix(1,1)+matrics_LR.confusionMatrix(0,1)) )
     println("recall(1) = " + matrics_LR.confusionMatrix(1,1)/(matrics_LR.confusionMatrix(1,1)+matrics_LR.confusionMatrix(1,0)) )
-//    precision(1) = 0.8097976455992594
-//    recall(1) = 0.26676408842504534
-
-//    0.7081074359432239
-//    0.4293913983185062
+//    precision(1) = 0.7081074359432239
+//    recall(1) = 0.4293913983185062
 
     //ROC & AUC
     val roc_metrics=new BinaryClassificationMetrics(predict_LR)
@@ -90,6 +87,7 @@ object LR {
 //    imporove
 //    9.9219225E7  8060403.0
 //    8673220.0    6525768.0
+
     //precision  ,recall
     println("precision(1) = " + matrics2.confusionMatrix(1,1)/(matrics2.confusionMatrix(1,1)+matrics2.confusionMatrix(0,1)) )
     println("recall(1) = " + matrics2.confusionMatrix(1,1)/(matrics2.confusionMatrix(1,1)+matrics2.confusionMatrix(1,0)) )
