@@ -1,4 +1,4 @@
-package test
+package mltest
 
 import org.apache.spark.{SparkConf, SparkContext}
 import scala.math._
@@ -25,5 +25,3 @@ object sparkPi {
     sc.stop()
   }
 }
-
-
