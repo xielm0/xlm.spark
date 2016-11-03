@@ -66,7 +66,7 @@ object itemCF {
     //top k
 //    val sim_topk = sim.map{case (item1,item2,score) => (item1,(item2,score))}.groupByKey().flatMap{
 //      case( a, b)=>  //b=Interable[(item2,score)]
-//        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(k)
+//        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(200)
 //        topk.map{ t => (a,t._1,t._2) }
 //    }
 

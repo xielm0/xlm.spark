@@ -1,7 +1,6 @@
 package com.jd.szad.itemcf
 
 import com.jd.szad.tools.Writer
-import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -20,14 +19,14 @@ object compute_itemcor {
     val input_path :String = args(1)
     val part_num :Int = args(2).toInt
     val model_path :String =args(3)
-    val last_day = args(4) // val last_day =20160918
+    val last_day = args(4) // val last_day =2016-09-18
 
     if (model_type =="train") {
       val data=sc.textFile(input_path).repartition(part_num)
 
       val hiveContext = new org.apache.spark.sql.hive.HiveContext(sc)
       val s1 =
-        s"""select adid from app_szad_m_midpage_valid_ad
+        s"""select adid from app.app_szad_m_midpage_valid_ad where dt='${last_day}'
        """.stripMargin
       val ad_sku = hiveContext.sql(s1).map(t=> t(0).asInstanceOf[Long]).collect().zipWithIndex.toMap
 
@@ -42,24 +41,20 @@ object compute_itemcor {
 
     } else if (model_type =="predict") {
 
-      val output_path:String = args(4)
-      print ("input_path:",input_path)
       val user = sc.textFile(input_path).repartition(part_num).map{t=>
         val x=t.split("\t")
-        if (x(1) != "\\N") UserPref(x(0) ,x(1).toLong,x(2).toInt)
-        else UserPref(x(0) ,0,x(2).toInt)
-      }.persist(StorageLevel.MEMORY_AND_DISK)
-
-      print("user count is " +user.count() )
+        if (x(1) != "\\N") UserPref(x(0) ,x(1).toLong,x(4).toInt)
+        else UserPref(x(0) ,0,x(4).toInt)
+      }
 
       val sim = sc.textFile(model_path).map(_.split("\t")).map(t=>ItemSimi(t(0).toLong ,t(1).toLong,t(2).toDouble))
 
       //预测用户的推荐
-      val res = predict_itemcf.recommend(sim,user,5)
+      val res = predict_itemcf.recommend(sim,user,20)
         .map(t=> t._1 +"\t" + t._2 +"\t" + t._3 +"\t" + t._4)
 
       //保存到hdfs
-      Writer.write_table(res,output_path)
+      //Writer.write_table(res,args(4))
 
     }
 
