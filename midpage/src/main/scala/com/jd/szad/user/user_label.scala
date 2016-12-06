@@ -2,7 +2,6 @@ package com.jd.szad.user
 
 import com.jd.szad.tools.Writer
 import org.apache.spark.mllib.linalg.distributed.{CoordinateMatrix, MatrixEntry}
-import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 /**
  * Created by xieliming on 2016/10/31.
@@ -61,83 +60,91 @@ object user_label {
       /* 面临的几个问题
        * 类目偏好和购物性别对应的sku验证的数据倾斜；解决办法：分开
        *  */
-      sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
+      sqlContext.sql("set spark.sql.shuffle.partitions = 2000")
+
       val sql=
         """
           |insert overwrite table app.app_szad_m_midpage_jd_label_res
-          |select uid,sku,sum(round(rate*score,6)) as score
-          |from (select uid,type,feature, 1 as rate
-          |        from app.app_szad_m_midpage_jd_label_train
-          |        where type=3
-          |       group by  uid,type,feature )a
-          |join (select sku,type,feature,score
-          |        from app.app_szad_m_midpage_jd_label_model
-          |         where type=3)b
-          |on(a.type=b.type and a.feature=b.feature)
-          |group by uid,sku
+          |select uid ,sku ,score
+          |  from( select uid ,sku ,score ,row_number() over(partition by uid order by score desc) rn
+          |          from(select uid,sku,sum(round(rate*score,1)) as score
+          |                from (select uid,type,feature, 1 as rate,count(1)
+          |                        from app.app_szad_m_midpage_jd_label_train
+          |                       group by  uid,type,feature )a
+          |                join (select sku,type,feature,score
+          |                       from (select sku,type,feature,score,row_number() over(partition by type,feature order by score desc ) rn
+          |                               from app.app_szad_m_midpage_jd_label_model)t
+          |                              where rn <=200 )b
+          |                 on (a.type=b.type and a.feature=b.feature)
+          |                join (select uid as valid_user from(
+          |                         select uid,count(distinct feature) cnt from app.app_szad_m_midpage_jd_label_train group by uid)t
+          |                      where cnt <=100 )c
+          |                  on a.uid = c.valid_user
+          |              group by uid,sku
+          |                )t1
+          |       )t2
+          | where rn <=200
         """.stripMargin
       sqlContext.sql(sql)
 
     }else if (model_type =="predict") {
 
-      val sql2=
+      val sql=
         """
           |select uid ,concat(type,'_',feature) as feature,1 as rate
           |from app.app_szad_m_midpage_jd_label_train
           |where length(uid)<=40
           |group by uid,concat(type,'_',feature)
         """.stripMargin
-      val user_label = sqlContext.sql(sql2).rdd.map(t=>(t(0).asInstanceOf[String],t(1).asInstanceOf[String],t(2).asInstanceOf[Int]))
+      val user_label = sqlContext.sql(sql).rdd.map(t=>(t(0),t(1),t(2).asInstanceOf[Int]))
 
-      val label_sku =sqlContext.sql("select sku,concat(type,'_',feature) as feature,score from app.app_szad_m_midpage_jd_label_model").rdd
-      .map(t=>(t(0).asInstanceOf[String],t(1).asInstanceOf[String],t(2).asInstanceOf[Double]))
+      val sql2 =
+        """
+          |select feature,sku,score
+          |from(
+          |select concat(type,'_',feature) as feature,sku,score,row_number() over(partition by type,feature order by score desc ) rn
+          |from app.app_szad_m_midpage_jd_label_model
+          |)t where rn<=200
+        """.stripMargin
+      val label_sku =sqlContext.sql(sql2).rdd.map(t=>(t(0),t(1),t(2).asInstanceOf[Double])).cache()
 
-      val res = predict(user_label,label_sku).map(t=> t._1 + "\t" + t._2)
+      //features map
+      val labels = sc.broadcast(label_sku.map(_._1).distinct().zipWithIndex().collectAsMap() )
+      val skus   = sc.broadcast(label_sku.map(_._2).distinct().zipWithIndex().collectAsMap() )
+      val users  = user_label.map(_._1).distinct().zipWithIndex()
+
+      //
+      val A = user_label.map(t=>(t._1,(t._2,t._3))).join(users).
+        map{ t =>
+          val user = t._2._2
+          if (labels.value.contains(t._2._1._1) ){
+              val label = labels.value( t._2._1._1)
+              MatrixEntry(user,label,t._2._1._2)
+          }else{MatrixEntry(-1,-1,0)}
+        }.filter(t=>t.i>=0)
+
+      val B = label_sku.map{ t =>
+        val label = labels.value( t._1)
+        val sku = skus.value( t._2)
+        MatrixEntry(label,sku,t._3)
+      }
+
+      //compute
+      // block matrix *  block matrix
+      val mat_A  = new CoordinateMatrix( A ).toBlockMatrix(1024,1024)
+      val mat_B  = new CoordinateMatrix( B ).toBlockMatrix(1024,1024)
+      val S = mat_A.multiply(mat_B)
+
+      println("numRowBlocks= " + mat_A.numRowBlocks + ",numColBlocks"+mat_B.numColBlocks)  //numColBlocks=180
+      println("A.blocks.partitions.length"+mat_A.blocks.partitions.length + "B.blocks.partitions.length"+mat_B.blocks.partitions.length)
+      println("first block size = " + S.blocks.map(t=>t._2.toString()))
+
+      val res =S.toCoordinateMatrix().entries.map(t=>t.i + "\t" + t.j + "\t" + t.value)
 
       //save
-      Writer.write_table(res,"app.db/app_szad_m_midpage_jd_label_res")
+      Writer.write_table( res ,"app.db/app_szad_m_midpage_jd_label_res","lzo")
 
     }
-  }
-
-  /*
-  * user_label : uid,feature,rate
-  * label_sku :  feature,sku,score
-  * */
-
-  def predict(user_label:RDD[(String,String,Int)],
-              label_sku:RDD[(String,String,Double)]): RDD[(Long,String)] ={
-    //features map
-    label_sku.cache()
-    val labels = label_sku.map(_._1).distinct().zipWithIndex().map(t=>(t._1,t._2)).collectAsMap()
-    val skus     = label_sku.map(_._2).distinct().zipWithIndex().map(t=>(t._1,t._2)).collectAsMap()
-    val users    = user_label.map(_._1).distinct().zipWithIndex().map(t=>(t._1,t._2)).collectAsMap()
-
-    val l_size = labels.size
-    //
-    val A = user_label.map{ t =>
-      val user = users( t._1)
-      val label = labels( t._2)
-      MatrixEntry(user,label,t._3)
-    }
-
-    val B = label_sku.map{ t =>
-      val label = labels( t._1)
-      val sku = skus( t._2)
-      MatrixEntry(label,sku,t._3)
-    }
-
-    //compute
-    // block matrix *  block matrix
-    val mat_A  = new CoordinateMatrix( A ).toBlockMatrix(2048,2048)
-    val mat_B  = new CoordinateMatrix( B ).toBlockMatrix(2048,2048)
-
-    val S = mat_A.multiply(mat_B)
-    println("first block size = " + S.blocks.first().toString())
-
-    val res = S.toIndexedRowMatrix().rows.map(t=>(t.index,t.vector.toSparse.toArray.mkString(":")))
-    res
-
   }
 
 

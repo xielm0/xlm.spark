@@ -31,6 +31,7 @@ object item_condition_prob {
          |from app.app_szad_m_midpage_ad_imppression_day
          |where dt = '${last_day}'
          |and sku_id <> imp_sku_id
+         |and sku_cid3 = imp_sku_cid3
          |and ad_sku_type=1
        """.stripMargin
 
