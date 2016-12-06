@@ -8,7 +8,6 @@ import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.mllib.recommendation.{ALS, MatrixFactorizationModel, Rating}
 import org.apache.spark.{SparkConf, SparkContext}
 
-
 object als {
   def main(args: Array[String]) {
     val sparkConf = new SparkConf()
@@ -31,9 +30,9 @@ object als {
 
     val ratings = data.map(_.split("\t") match  {case Array(user,item,rate) =>Rating(user.toInt,item.toInt,rate.toDouble)} )
 
-    //lambda=0.01 //lambad是用来防止过拟合的。
-    //blocks不能太少，否则train不出来结果。 block大于100，则在remmend时，笛卡尔不能接受
-    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.01)
+    //lambda=0.001 //lambda是正则因子的系数。
+    //blocks不能太少，否则train不出来结果。 block大于100，则在recommend时，笛卡尔不能接受
+    val model: MatrixFactorizationModel = ALS.train(ratings, rank, numIterations, lambda=0.001)
 
     //隐式反馈
     //    val alpha=0.01
@@ -61,7 +60,6 @@ object als {
     // MSE: Double = 0.7326887970584651
 
     // val sameModel = MatrixFactorizationModel.load(sc, myModelPath)
-
     //    推荐
     //    思路1：
     //    批量推荐，直接使用 recommendProductsForUsers，返回(user, ratings) ,1.5.2后可以使用
