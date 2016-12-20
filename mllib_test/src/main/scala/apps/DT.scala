@@ -1,4 +1,4 @@
-package dm_train
+package apps
 
 /**
  * Created by xieliming on 2015/11/11.
@@ -9,10 +9,6 @@ import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.tree.DecisionTree
 import org.apache.spark.{SparkConf, SparkContext}
-
-  /**
-   * Created by wangjing15 on 2015/11/3.
-   */
 
   //man 90w ,woman 90w
   object DT {
@@ -42,11 +38,11 @@ import org.apache.spark.{SparkConf, SparkContext}
 
       val numClasses = 2
       val categoricalFeaturesInfo = Map[Int, Int]()
-      val impurity = "entropy"  //gini
+      val impurity = "entropy"  //gini  // variance
       val maxDepth = 5
       val maxBins = 16    //数值分箱数
 
-      //val model_DT =DecisionTree.train(training,Algo.Classification, Entropy ,maxDepth)
+      //val model_DT1 =DecisionTree.train(training,Classification,impurity,maxDepth,numClasses, sort,maxBins, categoricalFeaturesInfo)
       val model_DT = DecisionTree.trainClassifier(training, numClasses, categoricalFeaturesInfo, impurity, maxDepth, maxBins)
 
       //模型评估
