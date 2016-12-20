@@ -8,6 +8,7 @@ import org.apache.spark.mllib.evaluation.{BinaryClassificationMetrics, Multiclas
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.tree.DecisionTree
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
   object DT {
@@ -31,6 +32,9 @@ import org.apache.spark.{SparkConf, SparkContext}
 //      0.0,107279628
 //      1.0,15198988
 
+      val splits: Array[RDD[LabeledPoint]] = data.randomSplit(Array(0.7, 0.3))
+      val (trainData, testData) = (splits(0), splits(1))
+
       //sampling 类似改变先验概率
       val data0 = data.filter(t=>t.label==0).sample(false,0.1)
       val data1 = data.filter(t=>t.label==1).sample(false,0.3)
@@ -46,10 +50,7 @@ import org.apache.spark.{SparkConf, SparkContext}
       val model_DT = DecisionTree.trainClassifier(training, numClasses, categoricalFeaturesInfo, impurity, maxDepth, maxBins)
 
       //模型评估
-      val PredAndslabel = data.map { point =>
-        val prediction = model_DT.predict(point.features)
-        (prediction, point.label)
-      }
+      val PredAndslabel = data.map (p => (model_DT.predict(p.features), p.label))
 
       //    要求顺序必须是（预测值, 实际值）
       val m_matrics=new MulticlassMetrics(PredAndslabel)
