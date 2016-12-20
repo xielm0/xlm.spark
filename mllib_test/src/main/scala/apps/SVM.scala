@@ -42,34 +42,33 @@ object SVM {
     }
 
     //split data
-    val splits = data.randomSplit(Array(0.6, 0.4), seed = 11L)
+    val splits = data.randomSplit(Array(0.1, 0.9), seed = 11L)
     val training = splits(0).cache()
     val test = splits(1)
 
     //spark 只支持linear svm
-    //svm 要做距离计算，计算间隔
+    //svm 要做距离计算，计算间隔,需要做
 //  val model = SVMWithSGD.train(input, numIterations, 1.0, 0.01, 1.0)
-    // regParm = 1/2C
     val lambda = 0.01
-    val model = SVMWithSGD.train(training, numIterations=100,stepSize=0.1,regParam=lambda,miniBatchFraction=0.5)
+    val model = SVMWithSGD.train(training, numIterations=100,stepSize=1.0,regParam=lambda,miniBatchFraction=0.5)
 
     //模型评估
     val PredAndslabel = data.map(p => (model.predict(p.features), p.label))
     val m_matrics=new MulticlassMetrics(PredAndslabel)
     println(m_matrics.confusionMatrix)
-    //    9.9221008E7  8058620.0
-    //    8674722.0    6524266.0
+//    9.1851085E7  1.5428543E7
+//    6734258.0    8464730.0
     println( "precision=" +m_matrics.precision  )
-    //    precision=0.8633774405158203
+//    precision=0.819047587866277
     println( m_matrics.precision(1) , m_matrics.recall(1) )
-    //    (0.4473919634289125,0.4292566057687525)
+    //    (0.35427251846157704,0.5569272112064303)
 
     //ROC & AUC
     val b_metrics=new BinaryClassificationMetrics(PredAndslabel)
     // AUROC
     val auROC = b_metrics.areaUnderROC
     println("Area under ROC = " + auROC)
-    //    auROC: Double = 0.6770693546001783
+    //    auROC: Double = 0.7065555309406149
 
   }
 
