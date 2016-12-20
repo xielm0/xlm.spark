@@ -32,6 +32,8 @@ object RF {
     val maxBins = 16    //数值分箱数
     val  categoricalFeatures = Map[Int,Int]()
 
+    val ntrees = 100
+
     val strategy=new Strategy(
       algo = Classification,  // Regression
       impurity = impurity, //measure for feature selection
@@ -40,9 +42,10 @@ object RF {
       numClasses = numClasses,
       categoricalFeaturesInfo = categoricalFeatures
     )
-
+    //avalid 策略有效性
     strategy.assertValid()
-    val rf = new RandomForest(strategy, numTrees = 1, featureSubsetStrategy = "all", seed = 0)
+
+    val rf = new RandomForest(strategy, numTrees = ntrees, featureSubsetStrategy = "all", seed = 0)
 
     val rfModel = rf.run(data)
 
