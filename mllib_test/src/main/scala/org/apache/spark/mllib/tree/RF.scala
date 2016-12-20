@@ -1,4 +1,4 @@
-package org.apache.spark.mllib.improve
+package org.apache.spark.mllib.tree
 
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
@@ -42,9 +42,9 @@ object RF {
     )
 
     strategy.assertValid()
-
     val rf = new RandomForest(strategy, numTrees = 1, featureSubsetStrategy = "all", seed = 0)
-    val rfModel = rf.run(input)
+
+    val rfModel = rf.run(data)
 
   }
 

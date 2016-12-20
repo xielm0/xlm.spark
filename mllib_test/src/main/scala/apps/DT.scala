@@ -10,7 +10,6 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.tree.DecisionTree
 import org.apache.spark.{SparkConf, SparkContext}
 
-  //man 90w ,woman 90w
   object DT {
     def main(args:Array[String]) {
       val sparkConf = new SparkConf()
