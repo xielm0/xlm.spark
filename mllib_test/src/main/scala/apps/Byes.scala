@@ -10,13 +10,12 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
  * Created by xieliming on 2015/11/12.
  */
-object Byes {
+object Bayes {
   def main(args:Array[String]) {
     val sparkConf = new SparkConf().setAppName("byes")
     val sc = new SparkContext(sparkConf)
 
     val org_data = sc.textFile("app.db/app_szad_m_dmp_label_childmom_train").map(_.split("\t"))   //return array[string]
-
 
     //bayes，若是二分类，则要求输入分类型特征，而且值必须是0/1 ，
     val data = org_data.map { parts =>
@@ -46,10 +45,6 @@ object Byes {
         pv_nums1,pv_nums2,pv_nums3,gen_fee1,gen_fee2,gen_fee3))
     }
 
-    //统计
-    data.map(t=>(t.label,1)).reduceByKey(_+_).collect()
-    //      0.0,107279628
-    //      1.0,15198988
     //sampling 类似改变先验概率
     val data0 = data.filter(t=>t.label==0).sample(false,0.1)
     val data1 = data.filter(t=>t.label==1).sample(false,0.3)
@@ -59,35 +54,23 @@ object Byes {
     val model_byes = NaiveBayes.train(training, lambda = 1.0, modelType = "bernoulli")
 
     //模型评估
-    val predict_bayes = training.map(p => (model_byes.predict(p.features),p.label))
-    val matrics_bayes=new MulticlassMetrics(predict_bayes)
-    println(matrics_bayes.confusionMatrix)
-//    9548807.0  1179667.0
-//    2289416.0  2270719.0
+    val PredAndslabel = data.map(p => (model_byes.predict(p.features), p.label))
 
-    //precision  ,recall
-    println("precision(1) = " + matrics_bayes.confusionMatrix(1,1)/(matrics_bayes.confusionMatrix(1,1)+matrics_bayes.confusionMatrix(0,1)) )
-    println("recall(1) = " + matrics_bayes.confusionMatrix(1,1)/(matrics_bayes.confusionMatrix(1,1)+matrics_bayes.confusionMatrix(1,0)) )
-//    precision(1) = 0.6581057887436362
-//    recall(1) = 0.49794995104311607
-
-    //ROC & AUC
-    val roc_metrics=new BinaryClassificationMetrics(predict_bayes)
-    println("area under PR:"+roc_metrics.areaUnderPR() +"  AUC:"+roc_metrics.areaUnderROC())
-//    area under PR:0.6530121552282322  AUC:0.6939809766338583
-
-    val predict_new = data.map(p => (model_byes.predict(p.features), p.label))
-
-    //模型评估
-    val matrics2=new MulticlassMetrics(predict_new)
-    println(matrics2.confusionMatrix)
+    //    要求顺序必须是（预测值, 实际值）
+    val m_matrics=new MulticlassMetrics(PredAndslabel)
+    println(m_matrics.confusionMatrix)
 //    9.5478709E7  1.1800919E7
 //    7627139.0    7571849.0
+    println( "precision=" +m_matrics.precision  )
+//    precision=0.8413759182255945
+    println( m_matrics.precision(1) , m_matrics.recall(1) )
+//    (0.390850135613042,0.49818112890147687)
 
-    //precision  ,recall
-    println("precision(1) = " + matrics2.confusionMatrix(1,1)/(matrics2.confusionMatrix(1,1)+matrics2.confusionMatrix(0,1)) )
-    println("recall(1) = " + matrics2.confusionMatrix(1,1)/(matrics2.confusionMatrix(1,1)+matrics2.confusionMatrix(1,0)) )
-//    precision(1) = 0.390850135613042
-//    recall(1) = 0.49818112890147687
+    val b_metrics=new BinaryClassificationMetrics(PredAndslabel)
+    // AUROC
+    val auROC = b_metrics.areaUnderROC
+    println("Area under ROC = " + auROC)
+//    Area under ROC = 0.6940898191088548
+
   }
 }

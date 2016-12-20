@@ -39,43 +39,39 @@ import org.apache.spark.{SparkConf, SparkContext}
       //params
       val numClasses = 2
       val categoricalFeaturesInfo = Map[Int, Int]()
-      val impurity = "entropy"  //gini  // variance
+      val impurity = "entropy"  // entropy,Gini,variance
       val maxDepth = 5
       val maxBins = 16    //数值分箱数
 
       val model_DT = DecisionTree.trainClassifier(training, numClasses, categoricalFeaturesInfo, impurity, maxDepth, maxBins)
 
       //模型评估
-      val PredAndslabel_DT = data.map { point =>
+      val PredAndslabel = data.map { point =>
         val prediction = model_DT.predict(point.features)
         (prediction, point.label)
       }
 
-//    要求顺序必须是（预测值, 实际值）
-      val matrics_DT=new MulticlassMetrics(PredAndslabel_DT)
+      //    要求顺序必须是（预测值, 实际值）
+      val m_matrics=new MulticlassMetrics(PredAndslabel)
+      println(m_matrics.confusionMatrix)
+      //      9.9402466E7  7877162.0
+      //      8515500.0    6683488.0
+      println( "precision=" +m_matrics.precision  )
+      //      0.8661589872961987
+      println( m_matrics.precision(1) , m_matrics.recall(1) )
+      //      (0.4590102777005147,0.43973243481737073)
 
-      println(matrics_DT.confusionMatrix)
-//      9939303.0  786849.0
-//      2555005.0  2004121.0
-
-      //precision  ,recall
-      println( matrics_DT.precision(1) , matrics_DT.recall(1) )
-//      0.7180732863484738  0.4395844729889018
-
-      val b_metrics=new BinaryClassificationMetrics(PredAndslabel_DT)
-      // ROC Curve
-      val roc = b_metrics.roc
-
+      val b_metrics=new BinaryClassificationMetrics(PredAndslabel)
       // AUROC
       val auROC = b_metrics.areaUnderROC
       println("Area under ROC = " + auROC)
-
+      //      Area under ROC = 0.6831529935335988
 
       //打印决策树
       model_DT.toDebugString
 
       //save model
-      model_DT.save(sc,"app.db/app_szad_m_dmp_label_childmom_model")
+//      model_DT.save(sc,"app.db/app_szad_m_dmp_label_childmom_model")
 
     }
   }

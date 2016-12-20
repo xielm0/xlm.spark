@@ -6,6 +6,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.tree.configuration.Algo._
 import org.apache.spark.mllib.tree.configuration.Strategy
 import org.apache.spark.mllib.tree.impurity._
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -27,17 +28,17 @@ object RF {
         LabeledPoint(parts(0), Vectors.dense(parts.tail))
       }
 
-    val splits = data.randomSplit(Array(0.7, 0.3))
+    val splits: Array[RDD[LabeledPoint]] = data.randomSplit(Array(0.7, 0.3))
     val (trainData, testData) = (splits(0), splits(1))
 
     val numClasses = 2
-    val impurity:Impurity =Gini  //gini  // variance
+    val imp:Impurity =Impurities.fromString("Gini")  //gini  // variance
     val maxDepth = 5
     val maxBins = 16    //数值分箱数
 
     val strategy=new Strategy(
       algo = Classification,  // Regression
-      impurity = impurity, //measure for feature selection
+      impurity = imp, //measure for feature selection
       maxBins = maxBins,
       maxDepth = maxDepth,
       numClasses = numClasses,
