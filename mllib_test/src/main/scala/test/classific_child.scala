@@ -143,8 +143,6 @@ object classific_child {
   }
 
 
-
-
   /*预测*/
   def classific_predict = {
 

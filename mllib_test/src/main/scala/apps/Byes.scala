@@ -15,12 +15,11 @@ object Byes {
     val sparkConf = new SparkConf().setAppName("byes")
     val sc = new SparkContext(sparkConf)
 
-    val org_data = sc.textFile("app.db/app_szad_m_dmp_label_childmom_train")   //return array[string]
+    val org_data = sc.textFile("app.db/app_szad_m_dmp_label_childmom_train").map(_.split("\t"))   //return array[string]
 
 
     //bayes，若是二分类，则要求输入分类型特征，而且值必须是0/1 ，
-    val data = org_data.map { line =>
-      val parts = line.split("\t")
+    val data = org_data.map { parts =>
       val tag = parts(1).toDouble
       val gender0 = if(parts(2)=="0") 1 else 0
       val gender1 = if(parts(2) =="1") 1 else 0
