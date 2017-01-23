@@ -7,12 +7,24 @@ queue=bdp_jmart_adv.bdp_jmart_sz_ad
 echo ${dt}
 
 
-#spark-submit --master yarn-client \
-spark-submit --master yarn-cluster --queue bdp_jmart_adv.bdp_jmart_sz_ad \
-   --conf spark.app.name=itemcf_predict1 \
+spark-submit --master yarn-client \
+   --conf spark.app.name=itemcf_predict \
+   --driver-memory 6g \
    --num-executors 100 \
    --executor-memory 8g \
    --executor-cores 4 \
-   --class com.jd.szad.itemcf.compute_itemcor midpage.jar \
-   predict app.db/app_szad_m_midpage_uid_item_train_day_jdpin_t/type=30  500  \
-   app.db/app_szad_m_midpage_item_item_cor1/dt=${dt} ${dt}
+   --class com.jd.szad.CF.app dyrec.jar \
+ predict  app.db/app_szad_m_dyrec_itemcf_apply_day/user_type=1 1000  app.db/app_szad_m_dyrec_itemcf_model \
+ app.db/app_szad_m_dyrec_itemcf_predict_res/user_type=1
+
+
+
+ nohup spark-submit --master yarn-client \
+   --conf spark.app.name=itemcf_predict \
+   --driver-memory 6g \
+   --num-executors 10 \
+   --executor-memory 8g \
+   --executor-cores 4 \
+   --class com.jd.szad.CF.app dyrec.jar \
+ predict  app.db/app_szad_m_dyrec_itemcf_apply_day/user_type=1/000033_0.lzo 40  app.db/app_szad_m_dyrec_itemcf_model \
+ app.db/app_szad_m_dyrec_itemcf_predict_res/user_type=1 &

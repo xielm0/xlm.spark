@@ -27,27 +27,28 @@ object app {
     val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
 
     if (model_type =="train") {
-
-      sqlContext.sql("set spark.sql.shuffle.partitions=1000;")
+//      sqlContext.sql("set spark.sql.shuffle.partitions = 400")
       val sql =
         """
           |select  uid,type,label,sku
           |from app.app_szad_m_dyrec_userlabel_train
-          |where (type>='301' and type <='302')
-          |group by uid,type,label,sku
-      """.stripMargin
+          |where type in('209001','210001','211001','309001','310001','311001','331001','332001','333001','363001','364001','365001')
+        """.stripMargin
       val org_df = sqlContext.sql(sql)
-      val df = org_df.rollup("type", "label","sku").agg(countDistinct("uid") as "uv").cache()
+      val df = org_df.rollup("type", "label","sku").agg(countDistinct("uid") as "uv").filter(col("uv")>30).cache()
+
       // df.filter(df("type")===1)
 
       // type,label,sku
       val df1 = df.filter("sku is not null").selectExpr("type","label","sku","uv as sku_uv")
       val df2 = df.filter("sku is null and label is not null ").selectExpr("type","label","uv as label_uv")
       val df3 = df.filter("sku is null and label is null and type is not null").selectExpr("type","uv as type_uv")
+      val df4 = df1.groupBy("type","sku").agg(sum("sku_uv") as "sku_uv" )
+      println("df3.count is " + df3.count())
 
       // prob
       val sku_label_rate = df1.join(df2, Seq("type","label")).selectExpr("type","label", "sku", "round(sku_uv/label_uv,8) as sku_label_rate")
-      val sku_type_rate = df1.join(df3, Seq("type")).selectExpr("type", "sku", "round(sku_uv/type_uv,8) as sku_type_rate")
+      val sku_type_rate = df4.join(df3, Seq("type")).selectExpr("type", "sku", "round(sku_uv/type_uv,8) as sku_type_rate")
       // lift
       val lift = sku_label_rate.join(sku_type_rate,Seq("type", "sku")).selectExpr("type", "label", "sku", "round(sku_label_rate/sku_type_rate,4) as lift")
       val lift_1 = lift.where(col("lift")>1)
@@ -61,13 +62,16 @@ object app {
       //boost_prob.write.save("app.db/app_szad_m_dyRec_userlabel_model")
       sqlContext.sql("use app")
       lift_1.registerTempTable("res_table")
-      sqlContext.sql("insert overwrite table app.app_szad_m_dyRec_userlabel_model select type,label,sku,lift from res_table")
+      sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
+      sqlContext.sql("set hive.exec.compress.output=true")
+      sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
+      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,lift from res_table")
 
      }else if (model_type =="sql_predict") {
-      /* 用户 x label , label x sku ,每个label 对应的sku不超过200过。否则计算困难。
-       * 最终保存的结果，每个用户保存top 200
+      /* 用户 x label , label x sku ,这里，一个用户不超过100个标签，一个label对应不超过100个sku。否则计算困难。
+       * 最终保存的结果，每个用户保存top 100
        *  */
-      sqlContext.sql("set spark.sql.shuffle.partitions = 2000")
+      sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
 
       val sql=
         """
@@ -75,18 +79,24 @@ object app {
           |select uid ,sku ,score,rn
           |  from( select uid ,sku ,score ,row_number() over(partition by uid order by score desc) rn
           |          from(select uid,sku,sum(round(rate*score,1)) as score
-          |                from (select uid,type,label, 1 as rate
-          |                        from app.app_szad_m_dyRec_userlabel_train
-          |                       group by  uid,type,label )a
+          |                from (select uid,type,label,rate
+          |                      from(select uid,type,label,rate,row_number() over(partition by uid order by type,label) rn
+          |                            from(select gdt_openid as uid,label_code as type,label_value as label,1 as rate,row_number() over(partition by gdt_openid order by label_code,label_value) rn
+          |                                  from app.app_szad_m_dmp_label_gdt_openid
+          |                                 where label_type in('209','210','211','309','310','311','331','332','333','363','364','365')
+          |                                   and label_code in('209001','210001','211001','309001','310001','311001','331001','332001','333001','363001','364001','365001')
+          |                                  )a1
+          |                           )a2
+          |                      where rn <100 )a
           |                join (select sku,type,label,score
           |                       from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
           |                               from app.app_szad_m_dyRec_userlabel_model)t
-          |                       where rn <=200 )b
+          |                       where rn <=100 )b
           |                 on (a.type=b.type and a.label=b.label)
           |              group by uid,sku
           |                )t1
           |       )t2
-          | where rn <=200
+          | where rn <=100
         """.stripMargin
       sqlContext.sql(sql)
 

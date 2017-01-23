@@ -12,7 +12,7 @@ spark-submit --master yarn-client \
  --num-executors 100 \
  --driver-memory 8g \
  --executor-memory 10g \
- --executor-cores 5 \
+ --executor-cores 4 \
  --class com.jd.szad.CF.app dyrec.jar \
  train  app.db/app_szad_m_midpage_jd_itemcf_train_day/action_type=1 1000  app.db/app_szad_m_dyrec_itemcf_model \
  app.db/app_szad_m_dyrec_itemcf_predict_res/user_type=1

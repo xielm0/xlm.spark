@@ -24,7 +24,7 @@ object itemCF {
   }
 
 
-  def compute_sim( sc:SparkContext ,user_action :RDD[UserItem]  ,ad_sku :Map[Long,Int] ): RDD[ItemSimi] ={
+  def compute_sim( sc:SparkContext ,user_action :RDD[UserItem]  ,ad_sku :Map[Long,Int] ,k :Int): RDD[ItemSimi] ={
 
     val ad_sku_b = sc.broadcast(ad_sku)
 
@@ -63,14 +63,15 @@ object itemCF {
     }.filter(_._3>0.001)    //过滤掉极小值
 
     //top k
+//    val sim = sc.textFile("app.db/app_szad_m_dyrec_itemcf_model").map( _.split("\t")) .map(t=>(t(0),t(1).toLong,t(2).toDouble)).filter(_._1=="10645983408")
     val sim_topk = sim.map{case (item1,item2,score) => (item1,(item2,score))}.groupByKey().flatMap{
       case( a, b)=>  //b=Interable[(item2,score)]
-        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(100)
+        val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(k)
         topk.map{ t => (a,t._1,t._2) }
     }
 
     //return
-    sim.map(t=>ItemSimi(t._1,t._2,t._3))
+    sim_topk.map(t=>ItemSimi(t._1,t._2,t._3))
   }
 
   def recommendItem(item_similar : RDD [ItemSimi],
@@ -83,21 +84,22 @@ object itemCF {
 
     val rdd2 = rdd1.map{case (itemid1,((userid,score),(itemid2,similar))) => ((userid,itemid2) , similar * score)}
 
-    //按用户累计求和
+    //按(用户,sku)累计求和
     val rdd3 = rdd2.reduceByKey(_+_).map(t=> (t._1,math.round(1000*t._2)/1000.0))
 
-    //过滤掉已有的物品
-    val rdd4 = rdd3.leftOuterJoin(user_action.map(t=>((t.userid,t.itemid),1)))
-      .filter(t=>t._2._2.isEmpty).map(t=> (t._1._1,(t._1._2,t._2._1)))
-
+    // rdd3数据很大，对一个用户，若是30*30，则最多有900个sku .此时再join耗费资源非常大。所以先top,再join过滤掉已经浏览/购买的sku.
     //取topk
-    val rdd5= rdd4.groupByKey()
+    val rdd4= rdd3.map{ case((uid,sku),score)=>(uid,(sku,score))}
+      .groupByKey()
+      .flatMap {case (uid, b) =>
+        val topk = b.toArray.sortWith { (a, b) => a._2 > b._2 }.take(k)
+        topk.zipWithIndex.map(t => ((uid, t._1._1), (t._1._2, t._2))) //t._2 = rn
+      }
 
-    rdd5.flatMap{
-      case(a,b) =>
-        val topk=b.toArray.sortWith{ (a,b) => a._2 > b._2 }.take(k)
-        topk.zipWithIndex.map(t=> (a,t._1._1,t._1._2,t._2))   //t._2 = rn
-    }
+    // 过滤掉已经浏览/购买的sku
+    rdd4.leftOuterJoin(user_action.map(t=>((t.userid,t.itemid),1)))
+      .filter(t=>t._2._2.isEmpty)
+      .map(t=> (t._1._1,t._1._2,t._2._1._1,t._2._1._2))
 
   }
 
