@@ -49,8 +49,8 @@ object app {
       val user =sc.textFile(input_path).repartition(part_num)
         .map(_.split("\t"))
         .map{x =>
-          if (x(1) != "\\N") UserPref(x(0) ,x(1).toLong,x(2).toInt)
-          else UserPref(x(0) ,x(1).toLong,x(2).toInt)
+          if (x(1) != "\\N") UserPref(x(0) ,0L,x(2).toInt)
+          else UserPref(x(0) ,x(1).toLong,1)
         }
 
       // 取sim的top k
@@ -72,22 +72,26 @@ object app {
       Writer.write_table(res,res_path,"lzo")
 
     }else if (model_type =="sql_predict") {
-
+      //经测试，sql的性能要好于自己写的。主要是row_number(),sql处理的更好。
       val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
-      sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
+      sqlContext.sql("set spark.sql.shuffle.partitions = 800")
+      sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
+      sqlContext.sql("set hive.exec.compress.output=true")
+      sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
+
       val sql=
         """
-          |insert overwrite table app.app_szad_m_dyRec_userlabel_predict_res partition (user_type=1)
+          |insert overwrite table app.app_szad_m_dyrec_itemcf_predict_res partition (user_type=1)
           |select t3.*
-          |  from (select uid ,sku ,score,rn
+          |  from (select uid ,sku2 ,score,rn
           |          from( select t1.uid,t1.sku2  ,t1.score ,row_number() over(partition by t1.uid order by t1.score desc) rn
-          |                  from(select uid,sku2,sum(round(rate*score,4)) as score
+          |                  from(select uid,sku2,sum(round(rate*cor,4)) as score
           |                        from (select uid,sku, count(1) as rate
           |                                from app.app_szad_m_dyrec_itemcf_apply_day
           |                               where user_type=1
           |                               group by  uid,sku )a
-          |                        join (select sku,type,label,score
-          |                               from (select sku1,sku2,row_number() over(partition by sku1 order by cor desc ) rn
+          |                        join (select t.*
+          |                               from (select sku1,sku2,cor,row_number() over(partition by sku1 order by cor desc ) rn
           |                                       from app.app_szad_m_dyrec_itemcf_model)t
           |                               where rn <=6 )b
           |                         on (a.sku=b.sku1)

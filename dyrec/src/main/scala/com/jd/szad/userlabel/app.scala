@@ -65,6 +65,7 @@ object app {
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
       sqlContext.sql("set hive.exec.compress.output=true")
       sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
+
       sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,lift from res_table")
 
      }else if (model_type =="sql_predict") {
@@ -72,6 +73,9 @@ object app {
        * 最终保存的结果，每个用户保存top 100
        *  */
       sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
+      sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
+      sqlContext.sql("set hive.exec.compress.output=true")
+      sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
 
       val sql=
         """
