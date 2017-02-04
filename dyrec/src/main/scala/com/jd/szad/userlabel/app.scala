@@ -172,7 +172,13 @@ object app {
       println("A.blocks.partitions.length"+mat_A.blocks.partitions.length + "B.blocks.partitions.length"+mat_B.blocks.partitions.length)
       println("first block size = " + S.blocks.map(t=>t._2.toString()))
 
-      val res =S.toCoordinateMatrix().entries.map(t=>t.i + "\t" + t.j + "\t" + t.value)
+      // top 100
+      val top100 =S.toCoordinateMatrix().entries.map(t =>(t.i,(t.j,t.value))).groupByKey().flatMap{
+        case( a, b)=>  //b=Interable[(item2,score)]
+          val topk= b.toArray.sortWith{ (b1,b2) => b1._2 > b2._2 }.take(100)
+          topk.zipWithIndex.map{ t => (a,t._1._1,t._1._2,t._2) }
+      }
+      val res = top100.map(t=>t._1 + "\t" + t._2 + "\t" + t._3 + "\t" + t._4)
 
       //save
       Writer.write_table( res ,"app.db/app_szad_m_dyrec_userlabel_predict_res/user_type=1","lzo")

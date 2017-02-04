@@ -59,7 +59,7 @@ object app {
       .groupByKey()
       .flatMap{
         case( a, b)=>  //b=Interable[(item2,score)]
-          val bb= b.toBuffer.sortWith{ (a,b) => a._2>b._2 } //desc
+          val bb= b.toBuffer.sortWith{ (b1,b2) => b1._2>b2._2 } //desc
           if (bb.length >k ) bb.remove( k,bb.length - k)
           bb.map{ t => ItemSimi(a,t._1,t._2) }
       }
@@ -72,7 +72,7 @@ object app {
       Writer.write_table(res,res_path,"lzo")
 
     }else if (model_type =="sql_predict") {
-      //经测试，sql的性能要好于自己写的。主要是row_number(),sql处理的更好。
+      //经测试，spark sql的性能要好于自己写的。主要是row_number(),sql处理的更好。
       val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
       sqlContext.sql("set spark.sql.shuffle.partitions = 800")
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
