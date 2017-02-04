@@ -8,7 +8,7 @@ import org.apache.spark.{SparkConf, SparkContext}
  * Created by xieliming on 2016/10/31.
  * 基于用户标签的推荐算法
  * 用户 x label , label x sku 的score用提升度
- * spark-shell --num-executors 10 --executor-memory 8g --executor-cores 4
+ * spark-shell --num-executors 50 --executor-memory 8g --executor-cores 4
  */
 object app {
 
@@ -27,39 +27,32 @@ object app {
     val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
 
     if (model_type =="train") {
-//      sqlContext.sql("set spark.sql.shuffle.partitions = 400")
+      sqlContext.sql("set spark.sql.shuffle.partitions = 400")
       val sql =
         """
-          |select  uid,type,label,sku
-          |from app.app_szad_m_dyrec_userlabel_train
-          |where type in('209001','210001','211001','309001','310001','311001','331001','332001','333001','363001','364001','365001')
+          |select  uid,type,label,sku, 1 as rate
+          |from app.app_szad_m_dyrec_userlabel_train_t
+          |where type in('browse_top20sku','browse_top20brand','browse_top20_cate')
         """.stripMargin
-      val org_df = sqlContext.sql(sql)
-      val df = org_df.rollup("type", "label","sku").agg(countDistinct("uid") as "uv").filter(col("uv")>30).cache()
-
-      // df.filter(df("type")===1)
+      val df = sqlContext.sql(sql)
 
       // type,label,sku
-      val df1 = df.filter("sku is not null").selectExpr("type","label","sku","uv as sku_uv")
-      val df2 = df.filter("sku is null and label is not null ").selectExpr("type","label","uv as label_uv")
-      val df3 = df.filter("sku is null and label is null and type is not null").selectExpr("type","uv as type_uv")
-      val df4 = df1.groupBy("type","sku").agg(sum("sku_uv") as "sku_uv" )
+      val df1 = df.groupBy("type","label","sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv")>10).cache()
+      val df2 = df1.groupBy("type","label").agg(sum("sku_uv") as "label_uv")
+      val df3 = df1.groupBy("type").agg(sum("sku_uv") as "type_uv")
+      val df4 = df1.groupBy("type","sku").agg(sum("sku_uv") as "sku_uv" ).filter(col("sku_uv")>10)
       println("df3.count is " + df3.count())
+//      val test= df2.filter(col("type")=== "browse_top20sku"  and col("label")=== "1283994")
 
       // prob
       val sku_label_rate = df1.join(df2, Seq("type","label")).selectExpr("type","label", "sku", "round(sku_uv/label_uv,8) as sku_label_rate")
       val sku_type_rate = df4.join(df3, Seq("type")).selectExpr("type", "sku", "round(sku_uv/type_uv,8) as sku_type_rate")
+
       // lift
       val lift = sku_label_rate.join(sku_type_rate,Seq("type", "sku")).selectExpr("type", "label", "sku", "round(sku_label_rate/sku_type_rate,4) as lift")
-      val lift_1 = lift.where(col("lift")>1)
-
-      // require boost_prob>1,so log(2,boost_prob)>0
-      // 性别、年龄的提升度不会很大，但是对于类目这种，则value is large
-      //  test
-      //  df.where(col("label")===9729 && col("sku")==="10613996786").show()
+      val lift_1 = lift.where(col("lift")>2 and col("label") !== col("sku").toString())
 
       //save
-      //boost_prob.write.save("app.db/app_szad_m_dyRec_userlabel_model")
       sqlContext.sql("use app")
       lift_1.registerTempTable("res_table")
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
@@ -71,57 +64,80 @@ object app {
      }else if (model_type =="sql_predict") {
       /* 用户 x label , label x sku ,这里，一个用户不超过100个标签，一个label对应不超过100个sku。否则计算困难。
        * 最终保存的结果，每个用户保存top 100
+       * spark1.5.2跑这个大数据量的sql有bug,必须1.6以上的版本
        *  */
+      val v_day = args(1)
       sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
       sqlContext.sql("set hive.exec.compress.output=true")
       sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
 
-      val sql=
+      val sql1=
+        s"""
+          |insert overwrite table app.app_szad_m_dyrec_userlabel_apply partition (user_type=1)
+          |select uid,'browse_top20sku' as type,sku as label,1 as rate ,rn
+          |  from app_szad_m_dyrec_user_top100_sku
+          | where user_type=1 and action_type=1 and dt='${v_day}'
+          |   and rn<=20
+          |union all
+          |select uid,'browse_top20cate' as type,3rd_cate_id as label,count(1) as rate ,rn
+          |  from app_szad_m_dyrec_user_top100_sku
+          | where user_type=1 and action_type=1 and dt='${v_day}'
+          |   and rn<=20
+          |group by uid,3rd_cate_id,rn
+        """.stripMargin
+//      sqlContext.sql(sql1)
+
+
+      val sql2=
         """
-          |insert overwrite table app.app_szad_m_dyRec_userlabel_predict_res partition (user_type=1)
+          |insert overwrite table app.app_szad_m_dyrec_userlabel_predict_res partition (user_type=1)
           |select uid ,sku ,score,rn
           |  from( select uid ,sku ,score ,row_number() over(partition by uid order by score desc) rn
           |          from(select uid,sku,sum(round(rate*score,1)) as score
-          |                from (select uid,type,label,rate
-          |                      from(select uid,type,label,rate,row_number() over(partition by uid order by type,label) rn
-          |                            from(select gdt_openid as uid,label_code as type,label_value as label,1 as rate,row_number() over(partition by gdt_openid order by label_code,label_value) rn
-          |                                  from app.app_szad_m_dmp_label_gdt_openid
-          |                                 where label_type in('209','210','211','309','310','311','331','332','333','363','364','365')
-          |                                   and label_code in('209001','210001','211001','309001','310001','311001','331001','332001','333001','363001','364001','365001')
-          |                                  )a1
-          |                           )a2
-          |                      where rn <100 )a
-          |                join (select sku,type,label,score
-          |                       from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
-          |                               from app.app_szad_m_dyRec_userlabel_model)t
-          |                       where rn <=100 )b
+          |                from (select * from app_szad_m_dyrec_userlabel_apply where user_type=1 and rn <=20) a
+          |                join (select type,label,sku,score
+          |                       from (select type,label,sku,score,row_number() over(partition by type,label order by score desc ) rn
+          |                               from app.app_szad_m_dyRec_userlabel_model )t
+          |                       where rn <=50 )b
           |                 on (a.type=b.type and a.label=b.label)
           |              group by uid,sku
           |                )t1
           |       )t2
           | where rn <=100
         """.stripMargin
-      sqlContext.sql(sql)
+      sqlContext.sql(sql2)
 
     }else if (model_type =="predict") {
+      /*
+      * 转换成点矩阵，然后join,或者说矩阵相乘
+      * */
+      val v_day = args(1)
 
       val sql=
-        """
-          |select uid ,concat(type,'_',label) as label,1 as rate
-          |from app.app_szad_m_midpage_jd_label_train
-          |where length(uid)<=40
-          |group by uid,concat(type,'_',label)
+        s"""
+          |select uid,concat(type,'_',label) as label, rate
+          |from(
+          |select uid,'browse_top20sku' as type,sku as label,1 as rate
+          |  from app_szad_m_dyrec_user_top100_sku
+          | where user_type=1 and action_type=1 and dt='${v_day}'
+          |   and rn<=20
+          |union all
+          |select uid,'browse_top20cate' as type,3rd_cate_id as label,count(1) as rate
+          |  from app_szad_m_dyrec_user_top100_sku
+          | where user_type=1 and action_type=1 and dt='${v_day}'
+          |   and rn<=20
+          |group by uid,3rd_cate_id,rn
+          |)t
         """.stripMargin
       val user_label = sqlContext.sql(sql).rdd.map(t=>(t(0),t(1),t(2).asInstanceOf[Int]))
 
       val sql2 =
-        """
-          |select label,sku,score
-          |from(
-          |select concat(type,'_',label) as label,sku,score,row_number() over(partition by type,label order by score desc ) rn
-          |from app.app_szad_m_midpage_jd_label_model
-          |)t where rn<=200
+        s"""
+          |select concat(type,'_',label) as label,sku,score
+          | from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
+          |         from app.app_szad_m_dyRec_userlabel_model)t
+          | where rn <=50
         """.stripMargin
       val label_sku =sqlContext.sql(sql2).rdd.map(t=>(t(0),t(1),t(2).asInstanceOf[Double])).cache()
 
@@ -159,7 +175,7 @@ object app {
       val res =S.toCoordinateMatrix().entries.map(t=>t.i + "\t" + t.j + "\t" + t.value)
 
       //save
-      Writer.write_table( res ,"app.db/app_szad_m_midpage_jd_label_res","lzo")
+      Writer.write_table( res ,"app.db/app_szad_m_dyrec_userlabel_predict_res/user_type=1","lzo")
 
     }
   }

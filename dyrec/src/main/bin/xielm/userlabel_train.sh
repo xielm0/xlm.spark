@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#spark2.0
 source /data/bossapp/software/bashrc
 
 spark-submit --master yarn-client \
@@ -20,4 +21,4 @@ spark-submit --master yarn-client \
  --executor-memory 10g \
  --executor-cores 5 \
  --class com.jd.szad.userlabel.app dyrec.jar \
- sql_predict
+ predict 2017-01-22
