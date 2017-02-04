@@ -164,8 +164,8 @@ object app {
 
       //compute
       // block matrix *  block matrix
-      val mat_A  = new CoordinateMatrix( A ).toBlockMatrix(1024,1024)
-      val mat_B  = new CoordinateMatrix( B ).toBlockMatrix(1024,1024)
+      val mat_A  = new CoordinateMatrix( A ).toBlockMatrix(10240,10240)
+      val mat_B  = new CoordinateMatrix( B ).toBlockMatrix(10240,10240)
       val S = mat_A.multiply(mat_B)
 
       println("numRowBlocks= " + mat_A.numRowBlocks + ",numColBlocks"+mat_B.numColBlocks)  //numColBlocks=180
@@ -176,6 +176,7 @@ object app {
       val top100 =S.toCoordinateMatrix().entries.map(t =>(t.i,(t.j,t.value))).groupByKey().flatMap{
         case( a, b)=>  //b=Interable[(item2,score)]
           val topk= b.toArray.sortWith{ (b1,b2) => b1._2 > b2._2 }.take(100)
+//          topk.map{ t => (a,t._1,t._2) }
           topk.zipWithIndex.map{ t => (a,t._1._1,t._1._2,t._2) }
       }
       val res = top100.map(t=>t._1 + "\t" + t._2 + "\t" + t._3 + "\t" + t._4)
