@@ -99,7 +99,7 @@ object app {
           |                join (select type,label,sku,score
           |                       from (select type,label,sku,score,row_number() over(partition by type,label order by score desc ) rn
           |                               from app.app_szad_m_dyRec_userlabel_model )t
-          |                       where rn <=50 )b
+          |                       where rn <=20 )b
           |                 on (a.type=b.type and a.label=b.label)
           |              group by uid,sku
           |                )t1
@@ -137,7 +137,7 @@ object app {
           |select concat(type,'_',label) as label,sku,score
           | from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
           |         from app.app_szad_m_dyRec_userlabel_model)t
-          | where rn <=50
+          | where rn <=20
         """.stripMargin
       val label_sku =sqlContext.sql(sql2).rdd.map(t=>(t(0),t(1),t(2).asInstanceOf[Double])).cache()
 
