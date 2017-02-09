@@ -46,6 +46,7 @@ object LR {
     val training=data0.union(data1)
 
     //feature more ,take time more long
+    val model = new LogisticRegressionWithLBFGS
     val model_LR = new LogisticRegressionWithLBFGS().setNumClasses(2) .run(training)
 
 
