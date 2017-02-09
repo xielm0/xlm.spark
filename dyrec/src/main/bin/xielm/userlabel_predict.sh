@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 
+dt=`date -d last-day +%Y-%m-%d`
+ftime=`date -d last-day +%Y%m%d`
+echo ${ftime}
+queue=bdp_jmart_adv.bdp_jmart_sz_ad
+echo ${dt}
+
+spark-submit --master yarn-client \
+ --driver-memory 8g \
+ --num-executors 100 \
+ --executor-memory 16g \
+ --executor-cores 8 \
+ --class com.jd.szad.userlabel.app dyrec.jar \
+ predict
+
+
+ spark-submit --master yarn-client \
+ --driver-memory 8g \
+ --num-executors 100 \
+ --executor-memory 16g \
+ --executor-cores 8 \
+ --class com.jd.szad.userlabel.multiply dyrec.jar \
+ predict vec
+
+
+
 #spark2.0
 source /data/bossapp/software/bashrc
 
@@ -15,16 +40,32 @@ spark-sql --master yarn-client \
  set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec;
 
 insert overwrite table app.app_szad_m_dyrec_userlabel_apply partition (user_type=1)
-select uid,type,label,rate,rn
-  from(select uid,type,label,rate,row_number() over(partition by uid order by type,label) rn
-        from(select gdt_openid as uid,label_code as type,label_value as label,1 as rate,
-                    row_number() over(partition by gdt_openid order by label_code,label_value) rn
-              from app.app_szad_m_dmp_label_gdt_openid
-             where label_type in('209','210','211','309','310','311','331','332','333','363','364','365')
-               and label_code in('209001','210001','211001','309001','310001','311001','331001','332001','333001','363001','364001','365001')
-              )a1
-       )a2
-  where rn <100"
+select uid,'browse_top20sku' as type,sku as label,1 as rate ,rn
+  from app.app_szad_m_dyrec_user_top100_sku
+ where user_type=1 and length(uid)>20
+   and action_type=1
+   and dt='2017-02-07'
+   and sku is not null
+   and rn<=20
+union all
+select uid,'browse_top20cate' as type,3rd_cate_id as label,count(1) as rate ,min(rn) as rn
+  from app.app_szad_m_dyrec_user_top100_sku
+ where user_type=1 and length(uid)>20
+   and action_type=1
+   and dt='2017-02-07'
+   and 3rd_cate_id is not null
+   and rn<=20
+group by uid,3rd_cate_id
+union all
+select uid,'browse_top20cate' as type,brand_id as label,count(1) as rate ,min(rn) as rn
+  from app.app_szad_m_dyrec_user_top100_sku
+ where user_type=1 and length(uid)>20
+   and action_type=1
+   and dt='2017-02-07'
+   and brand_id is not null
+   and rn<=20
+group by uid,brand_id
+"
 
 
  spark-sql --master yarn-client \
