@@ -8,7 +8,7 @@ import org.apache.spark.{SparkConf, SparkContext}
  * Created by xieliming on 2017/2/9.
  */
 
-object multiply {
+object MatrixMultiply {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       .setAppName("user_label")
@@ -93,7 +93,7 @@ object multiply {
       import org.apache.spark.mllib.linalg.distributed2.CoordinateMatrixEx.CoordinateMatrixV2
       import org.apache.spark.mllib.linalg.distributed2.BlockMatrixEx.BlockMatrixV2
       val block_A = mat_A.toBlockMatrixV2(102400, 204800)
-      val block_B = mat_B.toBlockMatrixV2(204800, 10240)
+      val block_B = mat_B.toBlockMatrixV2(204800, 102400)
       println("A.blocks.partitions.length= " + block_A.blocks.partitions.length + ",A.numRowBlocks=" + block_A.numRowBlocks+ ",A.numColBlocks=" + block_A.numColBlocks)
       println("A.numRows=" + block_A.numRows+ ",A.numCols=" + block_A.numCols)
       println("B.blocks.partitions.length= " + block_B.blocks.partitions.length + ",B.numRowBlocks=" + block_B.numRowBlocks+ ",B.numColBlocks=" + block_B.numColBlocks)
