@@ -7,13 +7,14 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
  * Created by xieliming on 2017/2/9.
  */
+
 object multiply {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
       .setAppName("user_label")
       .set("spark.akka.timeout", "1000")
       .set("spark.rpc.askTimeout", "500")
-
+     
     val sc = new SparkContext(conf)
 
     val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
@@ -35,17 +36,17 @@ object multiply {
         """.stripMargin
     val df_label_sku = sqlContext.sql(sql3)
 
-    val user_label = df_user_label.rdd.map(t => (t.getAs("uid").toString, t.getAs("label").toString, t.getAs("rate").asInstanceOf[Int] ))
-    val label_sku = df_label_sku.rdd.map(t => (t.getAs("label").toString, t.getAs("sku").toString, t.getAs("score").asInstanceOf[Double] )).cache()
+    val user_label = df_user_label.rdd.map(t => (t.getAs("uid").toString, t.getAs("label").toString, t.getAs("rate").asInstanceOf[Int]))
+    val label_sku = df_label_sku.rdd.map(t => (t.getAs("label").toString, t.getAs("sku").toString, t.getAs("score").asInstanceOf[Double])).cache()
 
     //tranform to int
     val users = user_label.map(_._1).distinct().zipWithIndex() //(user,Long)  val tmp=users.collectAsMap()
     val labels = label_sku.map(_._1).distinct().zipWithIndex().collectAsMap()
-    val skus = label_sku.map(_._2).distinct().zipWithIndex().collectAsMap()   //drive
+    val skus = label_sku.map(_._2).distinct().zipWithIndex().collectAsMap() //drive
     val labels_bc = sc.broadcast(labels)
     val skus_bc = sc.broadcast(skus)
 
-    val n=label_sku.map(_._1).distinct().count()
+    val n = label_sku.map(_._1).distinct().count()
     println("lables 's count =" + n)
 
     //tranform to matrix row=uid,col=label
@@ -62,36 +63,43 @@ object multiply {
 
     val B = label_sku.map { t =>
       val label = labels_bc.value(t._1)
-      if (skus_bc.value.contains(t._2)){
+      if (skus_bc.value.contains(t._2)) {
         val sku = skus_bc.value(t._2)
         (label, sku, t._3)
-      }else{ (-1L, -1L, 0D)}
+      } else {
+        (-1L, -1L, 0D)
+      }
     }.filter(_._1 >= 0)
 
     //params
     val mul_type = args(0)
-    if (mul_type=="block"){
+    if (mul_type == "block") {
       /*
          * 块矩阵相乘
          * shuffle过大，1.5.2的版本容易出现Missing an output location for shuffle
          * */
 
       //增加一个最大边界
-      val A_2 = sc.parallelize(Array(1,n)).map(t=>MatrixEntry(1L,t-1,0))
+      val A_2 = sc.parallelize(Array(1, n)).map(t => MatrixEntry(1L, t - 1, 0))
 
       //转换成矩阵
-      val mat_A = new CoordinateMatrix(A.map(t=>MatrixEntry(t._1,t._2,t._3))++( A_2))
-      val mat_B = new CoordinateMatrix(B.map(t=>MatrixEntry(t._1,t._2,t._3)))
+      val mat_A = new CoordinateMatrix(A.map(t => MatrixEntry(t._1, t._2, t._3)) ++ (A_2))
+      val mat_B = new CoordinateMatrix(B.map(t => MatrixEntry(t._1, t._2, t._3)))
+
 
       //compute
       // block matrix *  block matrix
-      //optimization   vec * matrix
-      val block_A = mat_A.toBlockMatrix(10240  , 200000 )
-      val block_B = mat_B.toBlockMatrix(200000 , 10240  )
-      val S = block_A.multiply(block_B)
 
-      println("A.blocks.partitions.length= " + block_A.blocks.partitions.length + ",A.numRows=" + block_A.numRows ) //numColBlocks=180
-      println("B.blocks.partitions.length= " + block_B.blocks.partitions.length + ",B.numCols=" + block_B.numCols())
+      import org.apache.spark.mllib.linalg.distributed2.CoordinateMatrixEx.CoordinateMatrixV2
+      import org.apache.spark.mllib.linalg.distributed2.BlockMatrixEx.BlockMatrixV2
+      val block_A = mat_A.toBlockMatrixV2(102400, 204800)
+      val block_B = mat_B.toBlockMatrixV2(204800, 10240)
+      println("A.blocks.partitions.length= " + block_A.blocks.partitions.length + ",A.numRowBlocks=" + block_A.numRowBlocks+ ",A.numColBlocks=" + block_A.numColBlocks)
+      println("A.numRows=" + block_A.numRows+ ",A.numCols=" + block_A.numCols)
+      println("B.blocks.partitions.length= " + block_B.blocks.partitions.length + ",B.numRowBlocks=" + block_B.numRowBlocks+ ",B.numColBlocks=" + block_B.numColBlocks)
+      println("A.numRows=" + block_B.numRows+ ",A.numCols=" + block_B.numCols)
+
+      val S = block_A.multiplyV2(block_B)
       println("S.blocks.partitions.length=" + S.blocks.partitions.length)
 
       // top 100
@@ -103,9 +111,9 @@ object multiply {
       }
 
       //transform to user, sku
-      val users_2 = users.map(_.swap)  //(long,string)
+      val users_2 = users.map(_.swap) //(long,string)
       val skus_2 = skus.map(_.swap)
-      val res = top100.join(users_2).map{case (user_int,((sku_int,score,rn),user))=>(user,skus_2(sku_int),score,rn)}
+      val res = top100.join(users_2).map { case (user_int, ((sku_int, score, rn), user)) => (user, skus_2(sku_int), score, rn) }
         .map(t => t._1 + "\t" + t._2 + "\t" + t._3 + "\t" + t._4)
 
       //save

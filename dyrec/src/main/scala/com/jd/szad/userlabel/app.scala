@@ -101,6 +101,8 @@ object app {
       Writer.write_table( res ,output_path,"lzo")
 
 
+
+
     }
 
     def df_join(df_user_label :DataFrame , df_label_sku:DataFrame , partitions : Int ,k :Int):DataFrame = {

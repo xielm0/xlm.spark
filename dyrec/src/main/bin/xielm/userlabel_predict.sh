@@ -16,6 +16,14 @@ spark-submit --master yarn-client \
 
   #predict 1=1
 
+spark-submit --master yarn-client \
+ --driver-memory 6g \
+ --num-executors 100 \
+ --executor-memory 10g \
+ --executor-cores 5 \
+ --class edu.nju.pasalab.marlin.examples.SparseMultiply dyrec.jar \
+ 100000000 100000 1000000 1 3
+
 
  spark-submit --master yarn-client \
  --driver-memory 8g \
