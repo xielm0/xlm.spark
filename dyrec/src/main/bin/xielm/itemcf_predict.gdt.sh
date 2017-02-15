@@ -9,12 +9,14 @@ echo ${dt}
 
 spark-submit --master yarn-client \
    --conf spark.app.name=itemcf_predict \
-   --driver-memory 4g \
+   --driver-memory 6g \
    --num-executors 100 \
-   --executor-memory 8g \
-   --executor-cores 4 \
+   --executor-memory 10g \
+   --executor-cores 5 \
    --class com.jd.szad.CF.app dyrec.jar \
- predict  app.db/app_szad_m_dyrec_itemcf_apply_day/user_type=1 800  app.db/app_szad_m_dyrec_itemcf_model \
+ predict  app.db/app_szad_m_dyrec_itemcf_apply_day/user_type=1 1000  app.db/app_szad_m_dyrec_itemcf_model \
  app.db/app_szad_m_dyrec_itemcf_predict_res/user_type=1
+
+
 
 

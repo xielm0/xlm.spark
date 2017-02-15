@@ -6,10 +6,13 @@ package com.jd.szad.CF
 
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.expressions.Window
+import org.apache.spark.sql.functions._
 import org.apache.spark.storage.StorageLevel
 
 
-object itemCF {
+object itemCF  extends  Serializable{
 
   /*分别计算每个user的(item,item)相似性的分子
   输入x=(user,(item1,item2,...))
@@ -79,10 +82,12 @@ object itemCF {
                 k : Int) ={
 
     //矩阵相乘
-    val rdd1 = user_action.map(t=>(t.itemid,(t.userid,t.score)))
-      .join(item_similar.map(t=> (t.itemid1,(t.itemid2,t.similar))))
+    // 这里join产生数据倾斜。原因未明
+    val rdd1 = item_similar.map(t=> (t.itemid1,(t.itemid2,t.similar)))
+      .join(user_action.map(t=>(t.itemid,(t.userid,t.score))))
 
-    val rdd2 = rdd1.map{case (itemid1,((userid,score),(itemid2,similar))) => ((userid,itemid2) , similar * score)}
+
+    val rdd2 = rdd1.map{case (itemid1,((itemid2,similar),(userid,score))) => ((userid,itemid2) , similar * score)}
 
     //按(用户,sku)累计求和
     val rdd3 = rdd2.reduceByKey(_+_).map(t=> (t._1,math.round(1000*t._2)/1000.0))
@@ -100,6 +105,19 @@ object itemCF {
     rdd4.leftOuterJoin(user_action.map(t=>((t.userid,t.itemid),1)))
       .filter(t=>t._2._2.isEmpty)
       .map(t=> (t._1._1,t._1._2,t._2._1._1,t._2._1._2))
+
+  }
+
+
+  def df_join(df_user_label :DataFrame , df_label_sku:DataFrame  ,k :Int):DataFrame = {
+    //df join
+    val df1 = df_user_label.join(df_label_sku, "label").selectExpr("uid", "sku", "rate*score as score")
+    val df2 = df1.groupBy("uid", "sku").agg(round(sum("score"), 4) as "score")
+
+    //top 100
+    val w = Window.partitionBy("uid").orderBy(desc("score"))
+    val df4 = df2.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
+    df4
 
   }
 

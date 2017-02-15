@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 #spark2.0
-source /data/bossapp/software/bashrc
+#source /data/bossapp/software/bashrc
 
 spark-submit --master yarn-client \
  --conf spark.app.name=userlabel_train \
- --driver-memory 4g \
+ --driver-memory 6g \
  --num-executors 100 \
  --executor-memory 10g \
  --executor-cores 5 \

@@ -32,7 +32,7 @@ object app {
         """
           |select  uid,type,label,sku, 1 as rate
           |from app.app_szad_m_dyrec_userlabel_train
-          |where type in('browse_top20sku','browse_top20brand','browse_top20cate','7_click_top20cate','7_click_top20brand')
+          |where type in('browse_top20sku','browse_top20brand','browse_top20cate','7_click_top20cate','7_click_top20brand','7_click_top20sku')
         """.stripMargin
       val df = sqlContext.sql(sql)
 
@@ -42,7 +42,7 @@ object app {
       val df3 = df1.groupBy("type").agg(sum("sku_uv") as "type_uv")
       val df4 = df1.groupBy("type", "sku").agg(sum("sku_uv") as "sku_uv").filter(col("sku_uv") > 10)
       println("df3.count is " + df3.count())
-      //      val test= df2.filter(col("type")=== "browse_top20sku"  and col("label")=== "1283994")
+      // val test= df2.filter(col("type")=== "browse_top20sku"  and col("label")=== "1283994")
 
       // prob
       val sku_label_rate = df1.join(df2, Seq("type", "label")).selectExpr("type", "label", "sku", "round(sku_uv/label_uv,8) as sku_label_rate")
@@ -64,33 +64,34 @@ object app {
       sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,lift from res_table where label <> String(sku)")
 
     } else if (model_type =="predict") {
-      val cond = args(1).toString
-      val output_path = args(2)
+      val cond1 = args(1).toString
+      val cond2 = args(2).toString
+      val output_path = args(3)
 //       val cond = s"type='top20brand'"
 //       val output_path=s"app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=top20brand"
 
    /* 矩阵相乘
       spark1.5.2跑这个大数据量的sql有bug,必须1.6以上的版本
-      df的join会被解析成sql
+      df的join会被解析成sql,一次跑1个分类。
       有数据倾斜*/
 
       val sql =
         s"""
-           |select uid,concat(type,'_',label) as label, rate
+           |select uid,label, rate
            |from app.app_szad_m_dyrec_userlabel_apply
            |where user_type=1
            |and length(uid)>20
            |and rn<=20
-           |and '${cond}'
+           |and  type='${cond1}'
         """.stripMargin
       val df_user_label = sqlContext.sql(sql)
 
 
       val sql3 =
         s"""
-           |select concat(type,'_',label) as label,sku,score
+           |select label,sku,score
            |from app.app_szad_m_dyRec_userlabel_model_2
-           |where '${cond}'
+           |where type='${cond2}'
         """.stripMargin
       val df_label_sku = sqlContext.sql(sql3)
 
@@ -99,9 +100,6 @@ object app {
       //save
       val res = res1.rdd.map(t => t.getAs("uid").toString + "\t" + t.getAs("sku") + "\t" + t.getAs("score") + "\t" + t.getAs("rn") )
       Writer.write_table( res ,output_path,"lzo")
-
-
-
 
     }
 

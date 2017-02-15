@@ -46,18 +46,17 @@ object app {
 
     } else if (model_type =="predict") {
 
-      val user =sc.textFile(input_path).repartition(part_num)
-        .map(_.split("\t"))
-        .map{x =>
-          if (x(1) != "\\N") UserPref(x(0) ,0L,x(2).toInt)
-          else UserPref(x(0) ,x(1).toLong,1)
+      val user =sc.textFile(input_path).repartition(part_num).map(_.split("\t")).map{x =>
+          if (x(1) == "\\N") UserPref(x(0) ,0L,x(2).toInt)
+          else UserPref(x(0) ,x(1).toLong,1 )
         }
+
+//      val n= user.filter(t=>t.itemid ==0).count()
+//      println("the number of sku is null =" + n)
 
       // 取sim的top k
       val k = 6
-      val sim = sc.textFile(model_path).map(_.split("\t")).map(t=>(t(0).toLong ,(t(1).toLong,t(2).toDouble)))
-      .groupByKey()
-      .flatMap{
+      val sim = sc.textFile(model_path).map(_.split("\t")).map(t=>(t(0).toLong ,(t(1).toLong,t(2).toDouble))) .groupByKey() .flatMap{
         case( a, b)=>  //b=Interable[(item2,score)]
           val bb= b.toBuffer.sortWith{ (b1,b2) => b1._2>b2._2 } //desc
           if (bb.length >k ) bb.remove( k,bb.length - k)
@@ -74,7 +73,7 @@ object app {
     }else if (model_type =="sql_predict") {
       //经测试，spark sql的性能要好于自己写的。主要是row_number(),sql处理的更好。
       val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
-      sqlContext.sql("set spark.sql.shuffle.partitions = 800")
+      sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
       sqlContext.sql("set hive.exec.compress.output=true")
       sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
