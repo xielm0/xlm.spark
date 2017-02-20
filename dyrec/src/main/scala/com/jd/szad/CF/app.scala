@@ -71,7 +71,7 @@ object app {
       Writer.write_table(res,res_path,"lzo")
 
     }else if (model_type =="sql_predict") {
-      //经测试，spark sql的性能要好于自己写的。主要是row_number(),sql处理的更好。
+
       val sqlContext = new org.apache.spark.sql.hive.HiveContext(sc)
       sqlContext.sql("set spark.sql.shuffle.partitions = 1000")
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")

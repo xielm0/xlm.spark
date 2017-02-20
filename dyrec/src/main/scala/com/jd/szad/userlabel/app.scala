@@ -1,7 +1,6 @@
 package com.jd.szad.userlabel
 
 import com.jd.szad.tools.Writer
-import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
 import org.apache.spark.{SparkConf, SparkContext}
@@ -87,36 +86,92 @@ object app {
       val df_user_label = sqlContext.sql(sql)
 
 
-      val sql3 =
+      val sql2 =
         s"""
            |select label,sku,score
            |from app.app_szad_m_dyRec_userlabel_model_2
            |where type='${cond2}'
         """.stripMargin
-      val df_label_sku = sqlContext.sql(sql3)
+      val df_label_sku = sqlContext.sql(sql2)
 
-      val res1 = df_join(df_user_label,df_label_sku,2000,50)
+
+      val t2 = df_label_sku.rdd.map(t=>(t.getAs("label").toString,(t.getAs("sku").toString,t.getAs("score").asInstanceOf[Double]))).groupByKey().collectAsMap()
+      val bc_t2 = sc.broadcast(t2)
+      val t1 = df_user_label.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Int]))
+
+      val rdd_join =t1.mapPartitions{iter =>
+        for{(uid,label,rate) <- iter
+          if (bc_t2.value.contains(label))
+            skus= bc_t2.value.get(label)
+            sku <- skus.get
+        }  yield (uid, sku._1, math.round(sku._2 * rate *10000)/10000 )
+        }
+
+      //top 100
+      val k =50
+      val top100 = rdd_join.map(t=> (t._1,(t._2,t._3))).groupByKey().flatMap{
+        case( a, b)=>  //b=Interable[(sku,score)]
+          val bb = b.toBuffer
+          val topk =bb.sortBy(_._2).reverse
+          if (topk.length >k ) topk.remove( k, topk.length-k)
+          topk.zipWithIndex.map{case((sku,score),rn) => (a, sku,score,rn) }
+      }
 
       //save
-      val res = res1.rdd.map(t => t.getAs("uid").toString + "\t" + t.getAs("sku") + "\t" + t.getAs("score") + "\t" + t.getAs("rn") )
+      val res = top100.map(t=>t._1 + "\t" + t._2 + "\t" + t._3.toString + "\t" + t._4 + "\t")
       Writer.write_table( res ,output_path,"lzo")
 
-    }
 
-    def df_join(df_user_label :DataFrame , df_label_sku:DataFrame , partitions : Int ,k :Int):DataFrame = {
-      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
-      //df join
-      val df1 = df_user_label.join(df_label_sku, "label").selectExpr("uid", "sku", "rate*score as score")
-      val df2 = df1.groupBy("uid", "sku").agg(round(sum("score"), 4) as "score")
+      // join
+//      val partitions=2000
+////      val k =50
+//      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
+//
+//      val bc_label_sku = sc.broadcast(df_label_sku)
+//      //df join
+//      val df1 = df_user_label.join(bc_label_sku.value, "label").selectExpr("uid", "sku", "rate*score as score")
+//      val df2 = df1.groupBy("uid", "sku").agg(round(sum("score"), 4) as "score")
+//
+//      //top 100
+//      val w = Window.partitionBy("uid").orderBy(desc("score"))
+//      val df4 = df2.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
+//
+//      //save
+//      val res = df4.rdd.map(t => t.getAs("uid").toString + "\t" + t.getAs("sku") + "\t" + t.getAs("score") + "\t" + t.getAs("rn") )
+//      Writer.write_table( res ,output_path,"lzo")
+
+    }else if (model_type =="sql_predict") {
+      val cond1 = args(1).toString
+      val cond2 = args(2).toString
+      val output_path = args(3)
+      val partitions =2000
+      val k =50
+
+      val sql3=
+      s"""
+        |select /*+mapjoin(b)*/ uid,sku,rate*score as score
+        |from(select uid,label, rate
+        |      from app.app_szad_m_dyrec_userlabel_apply
+        |      where user_type=1
+        |      and length(uid)>20
+        |      and rn<=20
+        |      and  type='${cond1}')a
+        |join (select * from app.app_szad_m_dyRec_userlabel_model_2 where type='${cond2}')b
+        |on a.label =b.label
+      """.stripMargin
+
+      val df_user_sku = sqlContext.sql(sql3)
+
+//      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
 
       //top 100
       val w = Window.partitionBy("uid").orderBy(desc("score"))
-      val df4 = df2.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
-      df4
+      val df4 = df_user_sku.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
 
+      //save
+      val res = df4.rdd.map(t => t.getAs("uid").toString + "\t" + t.getAs("sku") + "\t" + t.getAs("score") + "\t" + t.getAs("rn") )
+      Writer.write_table( res ,output_path,"lzo")
     }
-
-
 
   }
 
