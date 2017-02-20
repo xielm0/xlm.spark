@@ -12,7 +12,7 @@ spark-submit --master yarn-client \
  --executor-memory 16g \
  --executor-cores 8 \
  --class com.jd.szad.userlabel.app dyrec.jar \
- predict browse_top20brand 7_click_top20brand app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=7_click_top20brand
+ predict2 browse_top20brand 7_click_top20brand app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=7_click_top20brand
 
 #predict 1=1
 
