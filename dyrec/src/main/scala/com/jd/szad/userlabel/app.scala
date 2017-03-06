@@ -3,6 +3,7 @@ package com.jd.szad.userlabel
 import com.jd.szad.tools.Writer
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
@@ -32,15 +33,16 @@ object app {
           |select  uid,type,label,sku, 1 as rate
           |from app.app_szad_m_dyrec_userlabel_train
           |where type in('browse_top20sku','browse_top20brand','browse_top20cate','7_click_top20cate','7_click_top20brand','7_click_top20sku')
+          |group by uid,type,label,sku
         """.stripMargin
-      val df = sqlContext.sql(sql)
+      val df = sqlContext.sql(sql).persist(StorageLevel.MEMORY_AND_DISK)
 
       // type,label,sku
-      val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > 10).cache()
-      val df2 = df1.groupBy("type", "label").agg(sum("sku_uv") as "label_uv")
-      val df3 = df1.groupBy("type").agg(sum("sku_uv") as "type_uv")
-      val df4 = df1.groupBy("type", "sku").agg(sum("sku_uv") as "sku_uv").filter(col("sku_uv") > 10)
-      println("df3.count is " + df3.count())
+      val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > 10)
+      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > 10)
+      val df3 = df.groupBy("type").agg(countDistinct("uid") as "type_uv").filter(col("type_uv") > 10)
+      val df4 = df.groupBy("type", "sku").agg(countDistinct("uid") as "sku_uv").filter(col("sku_uv") > 10)
+       println("df3.count is " + df3.count())
       // val test= df2.filter(col("type")=== "browse_top20sku"  and col("label")=== "1283994")
 
       // prob
@@ -49,7 +51,7 @@ object app {
 
       // lift
       val lift = sku_label_rate.join(sku_type_rate, Seq("type", "sku")).selectExpr("type", "label", "sku", "round(sku_label_rate/sku_type_rate,4) as lift")
-      val lift_1 = lift.where(col("lift") > 5).where("label <> String(sku) " )
+      val lift_1 = lift.where(col("lift") > 2).where("label <> String(sku) " )
 
       //save
       //      val res = lift_1.rdd.map(t=>t(0) + "\t" + t(1) + "\t" + t(2) + "\t" + t(3))
