@@ -32,8 +32,8 @@ object app {
         """
           |select  uid,type,label,sku, 1 as rate
           |from app.app_szad_m_dyrec_userlabel_train
-          |where type in('short_cate2click','short_sku2click','short_cate2browse','short_sku2browse',
-          |'7_click_top20cate','7_click_top20sku','','')
+          |where type in('short_sku2click','short_sku2browse','short_cate2click','short_cate2browse',
+          |'long_cate2click','long_cate2browse' )
           |group by uid,type,label,sku
         """.stripMargin
       val df = sqlContext.sql(sql).persist(StorageLevel.MEMORY_AND_DISK)
@@ -41,7 +41,7 @@ object app {
       // type,label,sku
       val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > 5)
       val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > 5)
-//      val df3 = df.groupBy("type").agg(countDistinct("uid") as "type_uv").filter(col("type_uv") > 10)
+//      val df3 = df.groupBy("type").agg(countDistinct("uid") as "type_uv")
       val df31 = df.groupBy("type","uid").agg(countDistinct("uid") as "cnt")
       val df3 = df31.groupBy("type").agg(sum("cnt") as "type_uv").cache()
       val df4 = df.groupBy("type", "sku").agg(countDistinct("uid") as "sku_uv").filter(col("sku_uv") > 5)
@@ -81,7 +81,6 @@ object app {
            |from app.app_szad_m_dyrec_userlabel_apply
            |where user_type=1
            |and length(uid)>20
-           |and rn<=10
            |and  type='${cond1}'
         """.stripMargin
       val df_user_label = sqlContext.sql(sql1)
@@ -89,13 +88,16 @@ object app {
       val sql2 =
         s"""
            |select label,sku,score
-           |from app.app_szad_m_dyRec_userlabel_model_2
-           |where type='${cond2}'
+           |  from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
+           |         from app.app_szad_m_dyrec_userlabel_model
+           |        where type='${cond2}'
+           |          and label <> String(sku)  )t
+           |where rn<=10
         """.stripMargin
       val df_label_sku = sqlContext.sql(sql2)
 
       // join
-      val partitions=2000
+      val partitions=1000
 //      val k =50
       sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
 
@@ -104,7 +106,7 @@ object app {
       val df2 = df1.groupBy("uid", "sku").agg(round(sum("score"), 4) as "score")
 
       //top 100
-      val k =50
+      val k =30
       val w = Window.partitionBy("uid").orderBy(desc("score"))
       val df4 = df2.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
 
@@ -113,53 +115,33 @@ object app {
       Writer.write_table( res ,output_path,"lzo")
 
     }else if (model_type =="predict2") {
-      // 数据倾斜时，
+      // 数据倾斜时
 
       val cond1 = args(1).toString
       val cond2 = args(2).toString
       val output_path = args(3)
-      val partitions =2000
+      val partitions =1000
 
-//      val sql1 =
-//        s"""
-//           |select uid,label, rate
-//           |from app.app_szad_m_dyrec_userlabel_apply
-//           |where user_type=1
-//           |and length(uid)>20
-//           |and  type='${cond1}'
-//        """.stripMargin
-//      val df_user_label = sqlContext.sql(sql1)
-//
-//      val sql2 =
-//        s"""
-//           |select label,sku,score
-//           |from app.app_szad_m_dyRec_userlabel_model_2
-//           |where type='${cond2}'
-//        """.stripMargin
-//      val df_label_sku = sqlContext.sql(sql2)
-//
       val sql1 =
         s"""
-           |select uid,sku as label,1 as rate
-           |  from app.app_szad_m_dyrec_user_top100_sku
-           | where user_type=1 and length(uid)>20
-           |   and action_type=1
-           |   and dt='2017-03-08'
-           |   and sku is not null
-           |   and rn<=10
+           |select uid,label, rate
+           |from app.app_szad_m_dyrec_userlabel_apply
+           |where user_type=1
+           |and length(uid)>20
+           |and  type='${cond1}'
         """.stripMargin
       val df_user_label = sqlContext.sql(sql1)
 
       val sql2 =
         s"""
-           |select type ,label,sku,score
-           |     from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
-           |             from app.app_szad_m_dyrec_userlabel_model
-           |            where label <> String(sku) and type='short_sku2click' )t
-           |     where rn <=10
+           |select label,sku,score
+           |  from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
+           |         from app.app_szad_m_dyrec_userlabel_model
+           |        where type='${cond2}'
+           |          and label <> String(sku)  )t
+           |where rn<=10
         """.stripMargin
       val df_label_sku = sqlContext.sql(sql2)
-
 
       val t2 = df_label_sku.rdd.map(t=>(t.getAs("label").toString,(t.getAs("sku").toString,t.getAs("score").asInstanceOf[Double]))).groupByKey().collectAsMap()
       val bc_t2 = sc.broadcast(t2)

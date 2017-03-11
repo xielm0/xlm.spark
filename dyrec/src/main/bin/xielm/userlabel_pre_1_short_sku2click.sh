@@ -9,11 +9,10 @@ echo ${dt}
 spark-submit --master yarn-client \
  --driver-memory 6g \
  --num-executors 50 \
- --executor-memory 16g \
- --executor-cores 8 \
+ --executor-memory 10g \
+ --executor-cores 5 \
  --class com.jd.szad.userlabel.app dyrec.jar \
- predict browse_top20sku 7_click_top20sku app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=7_click_top20sku
+ predict2 short_sku short_sku2click app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=short_sku2click
 
-#predict 1=1
 
 

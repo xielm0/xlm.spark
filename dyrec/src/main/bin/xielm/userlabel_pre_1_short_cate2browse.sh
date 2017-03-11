@@ -8,14 +8,12 @@ echo ${dt}
 
 
 spark-submit --master yarn-client \
- --driver-memory 6g \
- --num-executors 80 \
- --executor-memory 16g \
- --executor-cores 8 \
+ --driver-memory 4g \
+ --num-executors 50 \
+ --executor-memory 10g \
+ --executor-cores 5 \
  --class com.jd.szad.userlabel.app dyrec.jar \
- predict2 browse_top20cate browse_top20cate app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=browse_top20cate
+ predict2 short_cate short_cate2browse app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=short_cate2browse
 
 
-#spark2.0
-#source /data/bossapp/software/bashrc
 
