@@ -1,13 +1,15 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 dt=`date -d last-day +%Y-%m-%d`
 ftime=`date -d last-day +%Y%m%d`
-echo ${ftime}
-queue=bdp_jmart_adv.bdp_jmart_sz_ad
+dt_07= `date -d "-8 days" +%Y-%m-%d`
 echo ${dt}
+echo ${ftime}
+echo ${dt_07}
+queue=bdp_jmart_adv.bdp_jmart_sz_ad
 
 spark-submit --master yarn-client \
- --driver-memory 6g \
+ --driver-memory 4g \
  --num-executors 50 \
  --executor-memory 10g \
  --executor-cores 5 \

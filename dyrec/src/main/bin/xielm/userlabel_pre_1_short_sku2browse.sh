@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 
 dt=`date -d last-day +%Y-%m-%d`

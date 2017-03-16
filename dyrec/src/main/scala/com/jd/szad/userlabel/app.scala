@@ -32,40 +32,28 @@ object app {
         """
           |select  uid,type,label,sku, 1 as rate
           |from app.app_szad_m_dyrec_userlabel_train
-          |where type in('short_sku2click','short_sku2browse','short_cate2click','short_cate2browse',
-          |'long_cate2click','long_cate2browse' )
+          |where type in('short_sku2browse','short_sku2click','long_sku2browse','long_sku2click')
           |group by uid,type,label,sku
         """.stripMargin
       val df = sqlContext.sql(sql).persist(StorageLevel.MEMORY_AND_DISK)
 
+
       // type,label,sku
-      val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > 5)
-      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > 5)
-//      val df3 = df.groupBy("type").agg(countDistinct("uid") as "type_uv")
-      val df31 = df.groupBy("type","uid").agg(countDistinct("uid") as "cnt")
-      val df3 = df31.groupBy("type").agg(sum("cnt") as "type_uv").cache()
-      val df4 = df.groupBy("type", "sku").agg(countDistinct("uid") as "sku_uv").filter(col("sku_uv") > 5)
-       println("df3.count is " + df3.count())
-      // val test= df2.filter(col("type")=== "browse_top20sku"  and col("label")=== "1283994")
+      val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > 10)
+      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > 10)
 
-      // prob
-      val sku_label_rate = df1.join(df2, Seq("type", "label")).selectExpr("type", "label", "sku", "round(sku_uv/label_uv,8) as sku_label_rate")
-      val sku_type_rate = df4.join(df3, Seq("type")).selectExpr("type", "sku", "round(sku_uv/type_uv,8) as sku_type_rate")
-
-      // lift
-      val lift = sku_label_rate.join(sku_type_rate, Seq("type", "sku")).selectExpr("type", "label", "sku", "round(sku_label_rate/sku_type_rate,4) as lift")
-      val lift_1 = lift.where(col("lift") > 2).where("label <> String(sku) " )
+      val label_sku =  df1.join(df2, Seq("type", "label")).selectExpr("type", "label", "sku", "round(sku_uv/log(1+label_uv),4) as score")
 
       //save
-      //      val res = lift_1.rdd.map(t=>t(0) + "\t" + t(1) + "\t" + t(2) + "\t" + t(3))
-      //      Writer.write_table(res,"app.app_szad_m_dyrec_userlabel_model","lzo")
+//      val res = label_sku.rdd.map(t=>t.getAs("type").toString + "\t" + t.getAs("label") + "\t" + t.getAs("sku") + "\t" + t.getAs("score"))
+//      Writer.write_table(res,"app.app_szad_m_dyrec_userlabel_model","lzo")
       sqlContext.sql("use app")
-      lift_1.registerTempTable("res_table")
+      label_sku.registerTempTable("res_table")
       sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
       sqlContext.sql("set hive.exec.compress.output=true")
       sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
 
-      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,lift from res_table where label <> String(sku)")
+      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,score from res_table where label <> String(sku)")
 
     } else if (model_type =="predict") {
       // 无数据倾斜时
@@ -106,7 +94,7 @@ object app {
       val df2 = df1.groupBy("uid", "sku").agg(round(sum("score"), 4) as "score")
 
       //top 100
-      val k =30
+      val k =20
       val w = Window.partitionBy("uid").orderBy(desc("score"))
       val df4 = df2.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
 
@@ -120,7 +108,7 @@ object app {
       val cond1 = args(1).toString
       val cond2 = args(2).toString
       val output_path = args(3)
-      val partitions =1000
+      val partitions =500
 
       val sql1 =
         s"""
@@ -145,7 +133,7 @@ object app {
 
       val t2 = df_label_sku.rdd.map(t=>(t.getAs("label").toString,(t.getAs("sku").toString,t.getAs("score").asInstanceOf[Double]))).groupByKey().collectAsMap()
       val bc_t2 = sc.broadcast(t2)
-      val t1 = df_user_label.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Int]))
+      val t1 = df_user_label.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Int])).repartition(partitions)
 
       val rdd_join =t1.mapPartitions{iter =>
         for{(uid,label,rate) <- iter
@@ -156,7 +144,7 @@ object app {
       }
 
       //top 100
-      val k =30
+      val k =20
       val top100 = rdd_join.map(t=> (t._1,(t._2,t._3))).groupByKey().flatMap{
         case( a, b)=>  //b=Interable[(sku,score)]
           val bb = b.toBuffer
@@ -166,7 +154,7 @@ object app {
       }
 
       //save
-      val res = top100.map(t=>t._1 + "\t" + t._2 + "\t" + t._3.toString + "\t" + t._4 + "\t")
+      val res = top100.map(t=>t._1 + "\t" + t._2.toString + "\t" + t._3.toString + "\t" + t._4 )
       Writer.write_table( res ,output_path,"lzo")
 
     }
