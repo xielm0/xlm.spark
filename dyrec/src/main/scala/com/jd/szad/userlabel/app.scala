@@ -32,7 +32,7 @@ object app {
         """
           |select  uid,type,label,sku, 1 as rate
           |from app.app_szad_m_dyrec_userlabel_train
-          |where type in('short_sku2browse','short_sku2click','long_sku2browse','long_sku2click')
+          |where type in('sku','sku_feature'  )
           |group by uid,type,label,sku
         """.stripMargin
       val df = sqlContext.sql(sql).persist(StorageLevel.MEMORY_AND_DISK)
@@ -127,7 +127,7 @@ object app {
            |         from app.app_szad_m_dyrec_userlabel_model
            |        where type='${cond2}'
            |          and label <> String(sku)  )t
-           |where rn<=10
+           |where rn<=20
         """.stripMargin
       val df_label_sku = sqlContext.sql(sql2)
 
@@ -140,7 +140,7 @@ object app {
             if (bc_t2.value.contains(label))
             skus= bc_t2.value.get(label)
             sku <- skus.get
-        }  yield (uid, sku._1, math.round(sku._2 * rate *10000)/10000.0 )
+        }  yield (uid, sku._1, math.round(sku._2 * math.sqrt(rate) *10000)/10000.0 )
       }
 
       //top 100

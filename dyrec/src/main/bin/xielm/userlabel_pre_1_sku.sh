@@ -13,4 +13,4 @@ spark-submit --master yarn-client \
  --executor-memory 16g \
  --executor-cores 8 \
  --class com.jd.szad.userlabel.app dyrec.jar \
- predict2 long_sku short_cate2browse app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=long_sku
+ predict2 sku sku app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=sku
