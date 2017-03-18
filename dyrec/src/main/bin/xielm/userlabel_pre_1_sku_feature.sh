@@ -9,10 +9,10 @@ echo ${dt_07}
 queue=bdp_jmart_adv.bdp_jmart_sz_ad
 
 spark-submit --master yarn-client \
- --driver-memory 4g \
+ --driver-memory 6g \
  --num-executors 50 \
- --executor-memory 10g \
- --executor-cores 5 \
+ --executor-memory 16g \
+ --executor-cores 8 \
  --class com.jd.szad.userlabel.app dyrec.jar \
  predict2 sku_feature sku_feature app.db/app_szad_m_dyrec_userlabel_predict_res2/user_type=1/type=sku_feature
 

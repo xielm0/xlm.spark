@@ -38,9 +38,10 @@ object app {
       val df = sqlContext.sql(sql).persist(StorageLevel.MEMORY_AND_DISK)
 
       // type,label,sku
-      val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > 10)
-//      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > 10)
-      val df3 = df.groupBy("type","sku").agg(countDistinct("uid") as "sku_all_uv").filter(col("sku_all_uv") > 10)
+      val minSupport =10
+      val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > minSupport)
+//      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > minSupport)
+      val df3 = df.groupBy("type","sku").agg(countDistinct("uid") as "sku_all_uv").filter(col("sku_all_uv") > minSupport)
 
       val label_sku =  df1.join(df3, Seq("type", "sku")).selectExpr("type", "label", "sku", "round(sku_uv/log(1+sku_all_uv),4) as score")
 
@@ -62,7 +63,7 @@ object app {
       val cond2 = args(2).toString
       val output_path = args(3)
       val partitions =500
-      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
+//      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
 
       val sql1 =
         s"""
@@ -89,15 +90,26 @@ object app {
       val bc_t2 = sc.broadcast(t2)
 
       val t0 = df_user_label.groupBy("label").agg(countDistinct("uid") as "label_uv")
-      val tt = df_user_label.join(t0,"label").selectExpr("uid","label","round(rate/log(1+label_uv),4) as rate2")
-      val t1 = tt.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Double]))
+//      val tt = df_user_label.join(t0,"label").selectExpr("uid","label","round(rate/log(1+label_uv),4) as rate")
+//      val t1 = tt.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Double]))
+
+      val b=t0.rdd.map(t=>(t.getAs("label").toString,t.getAs("label_uv").asInstanceOf[Long])).collectAsMap()
+      val bc_b = sc.broadcast(b)
+      val a=df_user_label.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Int])).repartition(partitions)
+      val t1=a.mapPartitions{iter =>
+        for{(label,uid,rate) <- iter
+            if (bc_b.value.contains(label))
+            s= bc_b.value.get(label).getOrElse(0L)
+        }  yield (uid, label, 1.0*rate/math.log(1 + s) )
+      }
+
 
       val rdd_join =t1.mapPartitions{iter =>
         for{(uid,label,rate) <- iter
             if (bc_t2.value.contains(label))
             skus= bc_t2.value.get(label)
             sku <- skus.get
-        }  yield (uid, sku._1, math.round(sku._2 * math.sqrt(rate) *10000)/10000.0 )
+        }  yield (uid, sku._1, math.round(sku._2 * rate *10000)/10000.0 )
       }
 
       //top 100
@@ -164,6 +176,21 @@ object app {
     }
 
   }
+
+//  def mapjoin[A,B](rdd_a:RDD[(String,A)],rdd_b:RDD[(String,B)],sc:SparkContext ): RDD[(String,A,B)] ={
+//    //
+//    val t2 = rdd_b.groupByKey().collectAsMap()
+//    val bc_t2 = sc.broadcast(t2)
+//    val t1=rdd_a
+//    t1.mapPartitions{iter =>
+//      for{(label,a) <- iter
+//          if (bc_t2.value.contains(label))
+//          b= bc_t2.value.get(label)
+//          b_i <- b.get
+//      }yield (label, a, b_i)
+//    }
+//  }
+
 
 
 }
