@@ -1,7 +1,6 @@
 package com.jd.szad.userlabel
 
 import com.jd.szad.tools.Writer
-import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
@@ -63,7 +62,7 @@ object app {
       val cond2 = args(2).toString
       val output_path = args(3)
       val partitions =500
-//      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
+      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
 
       val sql1 =
         s"""
@@ -89,18 +88,26 @@ object app {
       val t2 = df_label_sku.rdd.map(t=>(t.getAs("label").toString,(t.getAs("sku").toString,t.getAs("score").asInstanceOf[Double]))).groupByKey().collectAsMap()
       val bc_t2 = sc.broadcast(t2)
 
-      val t0 = df_user_label.groupBy("label").agg(countDistinct("uid") as "label_uv")
-//      val tt = df_user_label.join(t0,"label").selectExpr("uid","label","round(rate/log(1+label_uv),4) as rate")
-//      val t1 = tt.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Double]))
+      //历史上的label分布不均匀，且数量庞大。
+      val df1 = df_user_label.groupBy("label").agg(countDistinct("uid") as "label_uv")
+      val t0 = df1.join(df_label_sku,"label").selectExpr("label","label_uv").filter( col("label_uv")>10)
 
-      val b=t0.rdd.map(t=>(t.getAs("label").toString,t.getAs("label_uv").asInstanceOf[Long])).collectAsMap()
-      val bc_b = sc.broadcast(b)
-      val a=df_user_label.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Int])).repartition(partitions)
-      val t1=a.mapPartitions{iter =>
-        for{(label,uid,rate) <- iter
-            if (bc_b.value.contains(label))
-            s= bc_b.value.get(label).getOrElse(0L)
-        }  yield (uid, label, 1.0*rate/math.log(1 + s) )
+      // when type="sku",collectAsMap  out of memory
+      val join_type="mapjoin"
+      val t1=join_type match{
+        case "mapjoin" =>
+          val b = t0.rdd.map(t => (t.getAs("label").toString, t.getAs("label_uv").asInstanceOf[Long])).collectAsMap()
+          val bc_b = sc.broadcast(b)
+          val a = df_user_label.rdd.map(t => (t.getAs("uid").toString, t.getAs("label").toString, t.getAs("rate").asInstanceOf[Int])).repartition(partitions)
+          a.mapPartitions { iter =>
+            for {(label, uid, rate) <- iter
+                 if (bc_b.value.contains(label))
+                 s = bc_b.value.get(label).getOrElse(0L)
+            } yield (uid, label, 1.0 * rate / math.log(1 + s))
+          }
+        case "join" =>
+          val tt = df_user_label.join(t0,"label").selectExpr("uid","label","round(rate/log(1+label_uv),4) as rate")
+          tt.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Double]))
       }
 
 
@@ -126,54 +133,8 @@ object app {
       val res = top100.map(t=>t._1 + "\t" + t._2.toString + "\t" + t._3.toString + "\t" + t._4 )
       Writer.write_table( res ,output_path,"lzo")
 
-    } else if (model_type =="predict") {
-      // 无数据倾斜时
-      // spark1.5.2跑这个大数据量的sql有bug,必须1.6以上的版本
-
-      val cond1 = args(1).toString
-      val cond2 = args(2).toString
-      val output_path = args(3)
-
-      val sql1 =
-        s"""
-           |select uid,label, rate
-           |from app.app_szad_m_dyrec_userlabel_apply
-           |where user_type=1
-           |and length(uid)>20
-           |and  type='${cond1}'
-        """.stripMargin
-      val df_user_label = sqlContext.sql(sql1)
-
-      val sql2 =
-        s"""
-           |select label,sku,score
-           |  from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
-           |         from app.app_szad_m_dyrec_userlabel_model
-           |        where type='${cond2}'
-           |          and label <> String(sku)  )t
-           |where rn<=10
-        """.stripMargin
-      val df_label_sku = sqlContext.sql(sql2)
-
-      // join
-      val partitions=1000
-      //      val k =50
-      sqlContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
-
-      //df join
-      val df1 = df_user_label.join(df_label_sku, "label").selectExpr("uid", "sku", "rate*score as score")
-      val df2 = df1.groupBy("uid", "sku").agg(round(sum("score"), 4) as "score")
-
-      //top 100
-      val k =20
-      val w = Window.partitionBy("uid").orderBy(desc("score"))
-      val df4 = df2.select(col("uid"), col("sku"), col("score"), rowNumber().over(w).alias("rn")).where(s"rn<=${k}")
-
-      //save
-      val res = df4.rdd.map(t => t.getAs("uid").toString + "\t" + t.getAs("sku") + "\t" + t.getAs("score") + "\t" + t.getAs("rn") )
-      Writer.write_table( res ,output_path,"lzo")
-
     }
+
 
   }
 
@@ -190,7 +151,5 @@ object app {
 //      }yield (label, a, b_i)
 //    }
 //  }
-
-
 
 }
