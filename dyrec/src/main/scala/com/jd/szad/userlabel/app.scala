@@ -53,7 +53,7 @@ object app {
       sqlContext.sql("set hive.exec.compress.output=true")
       sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
 
-      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,score from res_table where label <> String(sku)")
+      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,score from res_table")
 
     } else if (model_type =="predict2") {
       // 数据倾斜时
@@ -79,8 +79,7 @@ object app {
            |select label,sku,score
            |  from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
            |         from app.app_szad_m_dyrec_userlabel_model
-           |        where type='${cond2}'
-           |          and label <> String(sku)  )t
+           |        where type='${cond2}')t
            |where rn<=20
         """.stripMargin
       val df_label_sku = sqlContext.sql(sql2)
