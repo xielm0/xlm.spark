@@ -90,7 +90,8 @@ object app {
 
       //历史上的label分布不均匀，且数量庞大。
       val df1 = df_user_label.groupBy("label").agg(countDistinct("uid") as "label_uv")
-      val t0 = df1.join(df_label_sku,"label").selectExpr("label","label_uv").filter( col("label_uv")>10)
+      val df2 = df_label_sku.groupBy("label").agg(count("sku") as "cnt")
+      val t0 = df1.join(df2,"label").selectExpr("label","label_uv")
 
       // when type="sku",collectAsMap  out of memory
       val join_type="mapjoin"
@@ -100,7 +101,7 @@ object app {
           val bc_b = sc.broadcast(b)
           val a = df_user_label.rdd.map(t => (t.getAs("uid").toString, t.getAs("label").toString, t.getAs("rate").asInstanceOf[Int])).repartition(partitions)
           a.mapPartitions { iter =>
-            for {(label, uid, rate) <- iter
+            for {(uid, label, rate) <- iter
                  if (bc_b.value.contains(label))
                  s = bc_b.value.get(label).getOrElse(0L)
             } yield (uid, label, 1.0 * rate / math.log(1 + s))
@@ -110,13 +111,14 @@ object app {
           tt.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Double]))
       }
 
+//      println("t1.count ="+t1.count())
 
       val rdd_join =t1.mapPartitions{iter =>
         for{(uid,label,rate) <- iter
             if (bc_t2.value.contains(label))
             skus= bc_t2.value.get(label)
-            sku <- skus.get
-        }  yield (uid, sku._1, math.round(sku._2 * rate *10000)/10000.0 )
+            (sku,score) <- skus.get
+        }  yield (uid, sku, math.round(score * rate *10000)/10000.0 )
       }
 
       //top 100
