@@ -31,29 +31,32 @@ object app {
         """
           |select  uid,type,label,sku, 1 as rate
           |from app.app_szad_m_dyrec_userlabel_train
-          |where type in('sku','sku_feature'  )
+          |where type in('sku' ,'sku_feature' )
           |group by uid,type,label,sku
         """.stripMargin
       val df = sqlContext.sql(sql).persist(StorageLevel.MEMORY_AND_DISK)
 
       // type,label,sku
-      val minSupport =10
+      val minSupport =2
+      val minConfidence =0.01
       val df1 = df.groupBy("type", "label", "sku").agg(sum("rate") as "sku_uv").filter(col("sku_uv") > minSupport)
-//      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv").filter(col("label_uv") > minSupport)
       val df3 = df.groupBy("type","sku").agg(countDistinct("uid") as "sku_all_uv").filter(col("sku_all_uv") > minSupport)
-
       val label_sku =  df1.join(df3, Seq("type", "sku")).selectExpr("type", "label", "sku", "round(sku_uv/log(1+sku_all_uv),4) as score")
 
-      //save
-//      val res = label_sku.rdd.map(t=>t.getAs("type").toString + "\t" + t.getAs("label") + "\t" + t.getAs("sku") + "\t" + t.getAs("score"))
-//      Writer.write_table(res,"app.app_szad_m_dyrec_userlabel_model","lzo")
-      sqlContext.sql("use app")
-      label_sku.registerTempTable("res_table")
-      sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
-      sqlContext.sql("set hive.exec.compress.output=true")
-      sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
+      println("df1 count = "+ df1.count())
+      val df2 = df.groupBy("type", "label").agg(countDistinct("uid") as "label_uv")
+      val df4 = df1.join(df2,Seq("type", "label")).selectExpr("type", "label", "sku", "round(sku_uv/label_uv,5) as sku_label_rate").filter(col("sku_label_rate") > minConfidence)
+      val res =label_sku.join(df4,Seq("type", "label","sku")).selectExpr("type", "label", "sku", "score")
 
-      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,score from res_table")
+      //save
+      val res2 = res.rdd.map(t=>t.getAs("type").toString + "\t" + t.getAs("label") + "\t" + t.getAs("sku") + "\t" + t.getAs("score")).repartition(100)
+      Writer.write_table(res2,"app.db/app_szad_m_dyrec_userlabel_model","lzo")
+//      sqlContext.sql("use app")
+//      res.registerTempTable("res_table")
+//      sqlContext.sql("set mapreduce.output.fileoutputformat.compress=true")
+//      sqlContext.sql("set hive.exec.compress.output=true")
+//      sqlContext.sql("set mapred.output.compression.codec=com.hadoop.compression.lzo.LzopCodec")
+//      sqlContext.sql("insert overwrite table app.app_szad_m_dyrec_userlabel_model select type,label,sku,score from res_table")
 
     } else if (model_type =="predict2") {
       // 数据倾斜时
@@ -80,15 +83,16 @@ object app {
            |  from (select sku,type,label,score,row_number() over(partition by type,label order by score desc ) rn
            |         from app.app_szad_m_dyrec_userlabel_model
            |        where type='${cond2}')t
-           |where rn<=20
+           |where rn<=3
         """.stripMargin
       val df_label_sku = sqlContext.sql(sql2)
 
       val t2 = df_label_sku.rdd.map(t=>(t.getAs("label").toString,(t.getAs("sku").toString,t.getAs("score").asInstanceOf[Double]))).groupByKey().collectAsMap()
       val bc_t2 = sc.broadcast(t2)
 
-      //历史上的label分布不均匀，且数量庞大。
+      //统计label的uv。
       val df1 = df_user_label.groupBy("label").agg(countDistinct("uid") as "label_uv")
+      //apply数据的label太多，按model的数据做一层过滤，减少label数量
       val df2 = df_label_sku.groupBy("label").agg(count("sku") as "cnt")
       val t0 = df1.join(df2,"label").selectExpr("label","label_uv")
 
@@ -102,7 +106,7 @@ object app {
           a.mapPartitions { iter =>
             for {(uid, label, rate) <- iter
                  if (bc_b.value.contains(label))
-                 s = bc_b.value.get(label).getOrElse(0L)
+                  s = bc_b.value.get(label).getOrElse(0L)
             } yield (uid, label, 1.0 * rate / math.log(1 + s))
           }
         case "join" =>
@@ -115,14 +119,15 @@ object app {
       val rdd_join =t1.mapPartitions{iter =>
         for{(uid,label,rate) <- iter
             if (bc_t2.value.contains(label))
-            skus= bc_t2.value.get(label)
-            (sku,score) <- skus.get
-        }  yield (uid, sku, math.round(score * rate *10000)/10000.0 )
+              skus= bc_t2.value.get(label)
+              (sku,score) <- skus.get
+        }  yield ((uid, sku), score * rate  )
       }
+      val t3= rdd_join.reduceByKey(_+_)
 
       //top 100
       val k =20
-      val top100 = rdd_join.map(t=> (t._1,(t._2,t._3))).groupByKey().flatMap{
+      val top100 = t3.map{case ((uid,sku),score)=> (uid,(sku,math.round(score*10000)/10000.0))}.groupByKey().flatMap{
         case( a, b)=>  //b=Interable[(sku,score)]
           val bb = b.toBuffer
           val topk =bb.sortBy(_._2).reverse

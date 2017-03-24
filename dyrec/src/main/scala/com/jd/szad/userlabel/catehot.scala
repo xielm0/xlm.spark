@@ -60,7 +60,7 @@ object catehot {
 
      //save
      val res2 = res.map(t=>t._1 + "\t" + t._2.toString + "\t" + "8" + "\t"+ t._3.toString  )
-     Writer.write_table( res2 ,s"app.db/app_szad_m_dyrec_catehot_predict_res/${output_path}","lzo")
+     Writer.write_table( res2 ,s"app.db/app_szad_m_dyrec_model_predict_res/${output_path}","lzo")
 
 
   }

@@ -17,3 +17,9 @@ case class UserPref(
 case class UserItem(
                      val userid:String ,
                      val itemid :Long   )extends  Serializable
+
+case class UserAct(
+                     val userid:String ,
+                     val itemid :Long ,
+                     val rate :Int,
+                     val rn  :Int)extends  Serializable
