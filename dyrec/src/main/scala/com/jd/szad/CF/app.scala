@@ -17,26 +17,48 @@ object app {
     val sc = new SparkContext(conf)
 
     val model_type :String = args(0)  // val model_type="train"
-    val input_path :String = args(1)
-    val part_num :Int = args(2).toInt
-    val model_path :String =args(3)
+    val partitions :Int = args(1).toInt
+    val model_path :String =args(2)
+
 
     val hiveContext = new org.apache.spark.sql.hive.HiveContext(sc)
+//    hiveContext.sql(s"set spark.sql.shuffle.partitions = ${partitions}")
 
     if (model_type =="train") {
+      val s0=
+        """
+          |select user_id,item_id
+          |from app.app_szad_m_dyrec_itemcf_train
+          |where action_type=1
+        """.stripMargin
+      val user_action = hiveContext.sql(s0).rdd.repartition(partitions).map(t=>
+        UserItem(t.getAs("user_id").toString,t.getAs("item_id").asInstanceOf[Long])
+      ).cache()  //.persist(StorageLevel.MEMORY_AND_DISK )
 
-      val data=sc.textFile(input_path).repartition(part_num)
+//      val user_action2 = sc.textFile("app.db/app_szad_m_dyrec_itemcf_train/action_type=1").map(t=>
+//      t.split("\t") match {case (user_id,item_Id,cate_id) =>UserItem(user_id,item_Id,cate_id) })
+
+      println("user_action count=" + user_action.count())
 
       //sku
       val s1 =
-        s"""select bigint(outerid) sku  from app.app_szad_m_dyrec_sku_list_day
+        s"""select bigint(outerid) sku  from app.app_szad_m_dyrec_sku_list_day group by outerid
        """.stripMargin
-      val ad_sku = hiveContext.sql(s1).map(t=> t.getAs("sku").asInstanceOf[Long]).collect().zipWithIndex.toMap
+      val ad_sku = hiveContext.sql(s1).rdd.map(t=> t.getAs("sku").asInstanceOf[Long]).collect().zipWithIndex.toMap
 
-      val user_action = data.map( _.split("\t") match{ case Array(user,item,rate) =>UserItem(user,item.toLong)})
+      //sku-cate map
+      // 原本打算map后broadcast,但太大，内存不足
+      val s2 =
+        """
+          |select item_id as sku,max(cate_id) as cate_id
+          |from app.app_szad_m_dyrec_itemcf_train
+          |where action_type=1
+          |group by item_id
+        """.stripMargin
+      val sku_cate = hiveContext.sql(s2).rdd.map(t=> (t.getAs("sku").asInstanceOf[Long],t.getAs("cate_id").asInstanceOf[Int]))
 
       //计算相似度
-      val similary = itemCF.compute_sim(sc,user_action,ad_sku,10)
+      val similary = itemCF.compute_sim(sc,user_action,ad_sku,sku_cate,10)
         .repartition(100)
         .map(t=>t.itemid1 +"\t" + t.itemid2 +"\t" + t.similar  )
 

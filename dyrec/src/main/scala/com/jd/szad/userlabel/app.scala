@@ -114,6 +114,10 @@ object app {
           tt.rdd.map(t=>(t.getAs("uid").toString,t.getAs("label").toString,t.getAs("rate").asInstanceOf[Double]))
       }
 
+//      val aa= df_user_label.rdd.map(t => (t.getAs("uid").toString,( t.getAs("label").toString, t.getAs("rate").asInstanceOf[Int])))
+//      val bb = t0.rdd.map(t => (t.getAs("label").toString, t.getAs("label_uv").asInstanceOf[Long]))
+//      val cc = mapjoin(aa,bb,sc)
+
 //      println("t1.count ="+t1.count())
 
       val rdd_join =t1.mapPartitions{iter =>
