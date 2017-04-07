@@ -92,7 +92,7 @@ object itemCF  extends  Serializable{
     //top k
 //    val sim = sc.textFile("app.db/app_szad_m_dyrec_itemcf_model").map( _.split("\t")) .map(t=>(t(0),t(1).toLong,t(2).toDouble)).filter(_._1=="10645983408")
     val sim_topk = sim.map{case (item1,item2,score) => (item1,(item2,score))}.groupByKey().flatMap{
-      case( a, b)=>  //b=Interable[(item2,score)]
+      case( a, b)=>  //b=Iterable[(item2,score)]
         val topk= b.toArray.sortWith{ (a,b) => a._2>b._2 }.take(k)
         topk.map{ t => (a,t._1,t._2) }
     }

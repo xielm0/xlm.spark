@@ -25,7 +25,7 @@ object catehot {
     val k= args(2).toInt  //20
     val output_path = args(3).toString
     val partitions =500
-    val n=3
+    val n=5
 
     //赋值一个随机数
 //    val r = new Random()
