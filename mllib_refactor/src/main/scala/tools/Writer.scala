@@ -1,5 +1,6 @@
 package tools
 
+import com.hadoop.compression.lzo.LzopCodec
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.rdd.RDD

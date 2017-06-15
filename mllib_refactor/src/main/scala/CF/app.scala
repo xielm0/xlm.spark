@@ -1,7 +1,8 @@
 package CF
 
-import com.jd.szad.tools.Writer
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.{SparkContext, SparkConf}
+import tools.Writer
+
 
 /**
  * Created by xieliming on 2016/6/7.
