@@ -1,0 +1,12 @@
+#idea
+.idea
+.DS_Store
+
+#others
+target
+classes
+META-INF
+*.iml
+artifacts
+out
+data

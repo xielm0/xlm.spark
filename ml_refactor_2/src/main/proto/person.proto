@@ -1,0 +1,20 @@
+package pino;
+
+option java_package = "com.jd.szad.pb";
+option java_outer_classname = "Person"; //默认是x.proto的x
+
+message Person_a {
+    required string name=1;
+    required int32 id=2;
+    optional string email=3;
+    repeated string phone=4;
+}
+
+
+message Person_b {
+    required string name=1;
+    required int32 id=2;
+    optional string email=3;
+    repeated string phone=4;
+}
+
