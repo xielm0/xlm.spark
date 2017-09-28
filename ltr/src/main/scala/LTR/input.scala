@@ -229,6 +229,7 @@ object input {
    *  统计某离散列的次数，取top k ，剩余的用默认值替代，加快运行速度。
    *  对sku_id, brand_id会用到
    *  要求该列是字符串
+   *  这里不能用array,在apply时，array比较大时，比如1e5,就会导致array.contains很慢。
    */
 
   def thin_column(df:DataFrame,colName:String, k:Int, train_flag :String,n:Int):DataFrame={
@@ -237,7 +238,7 @@ object input {
 
     if (train_flag=="fit"){
       val df1=df.groupBy(colName) .agg(count(colName) as "cnt").select(colName,"cnt").orderBy(col("cnt").desc)
-      val topk = df1.take(k).map(t=> t.getAs(colName).toString )
+      val topk = df1.take(k).map(t=> t.getAs(colName).toString +"," + "1" )
       // 转成rdd保存到hdfs
       val rdd1= spark.sparkContext.makeRDD(topk)
       //save
@@ -245,7 +246,8 @@ object input {
       fs.delete(new Path( s"ads_sz/app.db/app_szad_m_dyrec_rank_model_spark/n=${n}/${colName}" ), true)
       rdd1.saveAsTextFile(s"ads_sz/app.db/app_szad_m_dyrec_rank_model_spark/n=${n}/${colName}")
 
-      val bc_k = spark.sparkContext.broadcast(topk)
+      val topk_map=topk.map(t=>(t.split(",")(0),t.split(",")(1) ) ).toMap
+      val bc_k = spark.sparkContext.broadcast(topk_map)
       df.withColumn(new_colName,
         udf( (id:String)  => if (bc_k.value.contains(id ) ) id else "s" )
           .apply(col(colName))
@@ -253,8 +255,8 @@ object input {
     }else {
       // load
       val rdd1 = spark.sparkContext.textFile(s"ads_sz/app.db/app_szad_m_dyrec_rank_model_spark/n=${n}/${colName}")
-      val topk= rdd1.collect()
-      val bc_k = spark.sparkContext.broadcast(topk)
+      val topk_map= rdd1.map(t=> (t.split(",")(0),t.split(",")(1) ) ).collectAsMap()
+      val bc_k = spark.sparkContext.broadcast(topk_map)
 
       df.withColumn(new_colName,
         udf( (id:String)  => if (bc_k.value.contains(id ) ) id else "s" )
@@ -338,7 +340,7 @@ object input {
 //    val df7 = Array2Column(df6,"cross_gen_cate_sku",k )
 
     //id
-    val df8= thin_column(df1 ,"sku_id",  1e5.toInt , flag ,n)
+    val df8= thin_column(df1 ,"sku_id",  1e4.toInt , flag ,n)
     val df9= thin_column(df8 ,"brand_id",1e4.toInt , flag ,n)
 
     // cross
@@ -394,6 +396,7 @@ object input {
   def pip_fit(df:DataFrame ,n:Int): PipelineModel ={
     println("starting input.pip_fit")
     val new_df = genearate_new_column(df,"fit",n)
+    new_df.cache()
 
     val string_index: Array[org.apache.spark.ml.PipelineStage] = (str_columns_direct ++ str_columns_new ++ id_columns_thin ++cross_columns_tuple_s ).map(
       cname => new StringIndexer()
@@ -428,6 +431,7 @@ object input {
     fs.delete(new Path( s"ads_sz/app.db/app_szad_m_dyrec_rank_model_spark/n=${n}/pipline" ), true)
     pModel.save(s"ads_sz/app.db/app_szad_m_dyrec_rank_model_spark/n=${n}/pipline")
 
+    new_df.unpersist()
     return pModel
 
   }

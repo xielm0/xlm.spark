@@ -7,6 +7,7 @@ import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
 import org.apache.spark.ml.linalg.Vector
 import org.apache.spark.ml.{Pipeline, PipelineModel}
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.storage.StorageLevel
 
 /**
   * Created by xieliming on 2017/5/16.
@@ -15,14 +16,6 @@ import org.apache.spark.sql.SparkSession
 object tensorflow {
 
    def main(args: Array[String]) {
-     val spark = SparkSession.builder()
-       .appName("cpm.ltr.tensor")
-       .config("spark.rpc.askTimeout", "500")
-       .config("spark.speculation", "false")
-       .config("spark.memory.fraction", "0.6")
-       .config("spark.memory.storageFraction", "0.3")
-       .enableHiveSupport()
-       .getOrCreate()
 
      val train_flag:String = args(0)
      val dt_from:String = args(1)
@@ -30,6 +23,15 @@ object tensorflow {
      val n =7
 
      if (train_flag =="train") {
+       val spark = SparkSession.builder()
+         .appName("cpm.ltr.tensor.train")
+         .config("spark.rpc.askTimeout", "500")
+         .config("spark.speculation", "false")
+         .config("spark.memory.fraction", "0.8")
+         .config("spark.memory.storageFraction", "0.5")
+         .enableHiveSupport()
+         .getOrCreate()
+
        val s1 =
          s"""
             |select Double(target_tag)  label
@@ -84,8 +86,7 @@ object tensorflow {
 
        // 生成新的列
        val new_df =input.genearate_new_column(data,"apply",n)
-
-
+       new_df.cache()
 
        // 数据处理
        val stringColumns = input.id_columns_thin ++ input.str_columns_direct ++ input.str_columns_new  ++ input.cross_columns_tuple_s
@@ -97,13 +98,10 @@ object tensorflow {
            .setOutputCol(s"${cname}_ind").setHandleInvalid("skip")
        )
 
-
-
        //  Assembler
        val AllColumns = data.schema.fieldNames
        val addColumns = input.flag_columns ++ stringColumns_ind
        val delColumns =  input.id_columns ++: input.str_columns_del ++: input.str_columns_direct  ++: Array("label")
-
 
        // 这里不用vecColumns
        val VectorInputCols = (AllColumns ++: addColumns).filter(!delColumns.contains(_)) //VectorInputCols.length //dropWhile不起作用,才用的filter
@@ -142,9 +140,18 @@ object tensorflow {
        transform_test.repartition(20).saveAsTextFile("ads_sz/app.db/app_szad_m_dyrec_rank_train_tensorflow/type=test_new" )
      }
      else if(train_flag =="apply"){
+       val spark = SparkSession.builder()
+         .appName("cpm.ltr.tensor.apply")
+         .config("spark.rpc.askTimeout", "500")
+         .config("spark.speculation", "false")
+         .config("spark.memory.fraction", "0.8")
+         .config("spark.memory.storageFraction", "0.1")
+         .enableHiveSupport()
+         .getOrCreate()
 
        val data = input.get_apply_input(spark,7)
        val new_df =input.genearate_new_column(data,"apply",n)
+       new_df.persist(StorageLevel.MEMORY_AND_DISK)
 
        val pModel = PipelineModel.load( s"ads_sz/app.db/app_szad_m_dyrec_rank_model_spark/n=${n}/tensorflow_pip")
 
@@ -154,7 +161,6 @@ object tensorflow {
          val vec = t.getAs[Vector]("features")
          t.getAs[String]("user_id")+ "," + t.getAs[String]("sku_id") + "," + label +"," + vec.toArray.mkString(",")
        }
-
 
        //save
        val fs = FileSystem.get(new Configuration())
